@@ -2,4 +2,6 @@
 Neighborhood Map project for Udacity Nanodegree. 
 
 ## Installation
-Add later
+Open index.html to open app
+
+Bloop Bloop

@@ -2,4 +2,4 @@
 Neighborhood Map project for Udacity Nanodegree. 
 
 ## Installation
-Open index.html to open app
+Add later

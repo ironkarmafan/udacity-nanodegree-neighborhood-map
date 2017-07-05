@@ -4,4 +4,4 @@ Neighborhood Map project for Udacity Nanodegree.
 ## Installation
 Open index.html to open app
 
-Bloop Bloop
+Trying to get git to work in VSCode

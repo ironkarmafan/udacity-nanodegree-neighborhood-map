@@ -1,2 +1,5 @@
-# udacity-nanodegree-neighborhood-map
-Neighborhood Map project for Udacity Nanodegree
+# Neighborhood Map Project
+Neighborhood Map project for Udacity Nanodegree. 
+
+## Installation
+Open index.html to open app

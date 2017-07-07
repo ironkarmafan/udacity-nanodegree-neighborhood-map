@@ -22,7 +22,18 @@ API Course, Lesson 1 -->
           center: {lat: 35.7098177, lng: 139.8115049},
           zoom: 17
         });
-
+        var skytree = {lat: 35.7098177, lng: 139.8115049};
+        var marker = new google.maps.Marker({
+            position: skytree,
+            map: map,
+            title: 'I MISS YOU SKYTREE'
+        })
+        var infowindow = new google.maps.InfoWindow({
+            content: 'I MISS YOU SKYTREE'
+        });
+        marker.addListener('click', function(){
+            infowindow.open(map, marker);
+        });
      }
    </script>
    <!--TODO: Load the JS API ASYNCHRONOUSLY below.-->

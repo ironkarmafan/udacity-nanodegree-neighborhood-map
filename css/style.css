@@ -7,7 +7,16 @@ html, body {
 #map {
     height: 100%;
 }
+#output {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 button {
+    display: none;
     position: absolute;
     right: 10px;
     top: 10px;
@@ -15,6 +24,7 @@ button {
     background: black;
 }
 #bloop {
+    display: none;
     position: absolute;
     top: 10px;
     left: 10px;

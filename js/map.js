@@ -5,7 +5,8 @@ function initMap() {
     // create map
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 30.2499928, lng: -97.7658105},
-        zoom: 14
+        zoom: 14,
+        disableDefaultUI: true
     });
 
     // add all markers on map

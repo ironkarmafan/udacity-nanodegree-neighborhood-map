@@ -674,7 +674,6 @@ function filterPlaces(bs) {
             case "café-crêpe-austin-2":
             case "piranha-killer-sushi-austin":
 			case "barley-bean-austin-3":
-			case "barley bean":
 			case "austin-java-austin-3":
 			case "austin-java-austin-2":
 			case "caffé-medici-austin-5":

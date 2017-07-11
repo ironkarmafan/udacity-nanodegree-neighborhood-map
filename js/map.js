@@ -12,7 +12,8 @@ function initMap() {
     for(var i=0; i<initialPlaces.length; i++){
         markers[i] = new google.maps.Marker({
             position: {lat: initialPlaces[i].lat, lng: initialPlaces[i].lng},
-            map: map
+            map: map,
+            animation: google.maps.Animation.DROP
         });
     }
 }

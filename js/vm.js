@@ -21,6 +21,7 @@ function viewModel() {
         for(var i=0; i<initialPlaces.length; i++){
             if(p.name === initialPlaces[i].name){
                 markers[i].setMap(map);
+                markers[i].animation = google.maps.Animation.BOUNCE;
             }
             else {
                 // remove marker from map
@@ -32,6 +33,7 @@ function viewModel() {
     this.showAll = function() {
         markers.forEach(function(m){
             m.setMap(map);
+            m.animation = google.maps.Animation.DROP;
         });
     }
 }

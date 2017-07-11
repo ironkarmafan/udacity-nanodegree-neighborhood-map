@@ -1,16 +1,17 @@
 var map;
+var markers = [];
 
 function initMap() {
+    // create map
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 30.261823, lng: -97.7559063},
         zoom: 14
     });
-    var markers = [];
-    var myLatLng;
-    for(var i=0; i<places.length; i++){
-        myLatLng = {lat: places[i].lat, lng: places[i].lng};
+
+    // add all markers on map
+    for(var i=0; i<initialPlaces.length; i++){
         markers[i] = new google.maps.Marker({
-            position: myLatLng,
+            position: {lat: initialPlaces[i].lat, lng: initialPlaces[i].lng},
             map: map
         });
     }

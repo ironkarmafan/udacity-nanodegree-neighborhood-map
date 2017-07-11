@@ -1,33 +1,36 @@
 <!doctype html>
 <html>
  <head>
- <!-- styles put here, but you can include a CSS file and reference it instead! -->
-   <style type="text/css">
-     html, body { height: 100%; margin: 0; padding: 0; }
-     #map { height: 100%; }
-     #bloop {
-       position: absolute;
-       top: 10px;
-       left: 10px;
-       width: 300px;
-       height: 300px;
-       color: white;
-       background-color: black;
-     }
-   </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+      html, body { height: 100%; margin: 0; padding: 0; }
+      #map { height: 100%; }
+      #bloop {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 300px;
+        height: 300px;
+        color: white;
+        background-color: black;
+      }
+    </style>
  </head>
  <body>
-   <!-- TODO 1: Create a place to put the map in the HTML-->
    <div id="map"></div>
-   <div id="bloop"></div>
-   <script>
-
-   </script>
-   
+   <div id="bloop">
+     <span data-bind="click: showAll">Show All</span>
+    <ul data-bind="foreach: placesList">
+      <li data-bind="text: name, click: $parent.setPlace"></li>
+    </ul>
+   </div>
+   <script src="js/places.js"></script>
+   <script src="js/map.js"></script>
    <script  async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHEUetOP4G8rQ_g8stsp60DFafHyfb_ms&v=3&callback=initMap"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
    <script src="js/vm.js"></script>
-   <script src="js/map.js"></script>
  </body>
 </html>

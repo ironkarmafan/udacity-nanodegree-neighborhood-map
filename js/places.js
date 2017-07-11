@@ -12,5 +12,10 @@ var initialPlaces = [
         name: "The Science Cream",
         lat: 30.2484925,
         lng: -97.7517209
+    },
+    {
+        name: "Lick Honest Ice Creams",
+        lat: 30.2556041,
+        lng: -97.7648235
     }
 ]

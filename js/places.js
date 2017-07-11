@@ -1,6 +1,6 @@
 /*
 Model of places
-TODO: Make this dynamic
+TODO: Make this dynamic ...eventually
 */
 var initialPlaces = [
     {

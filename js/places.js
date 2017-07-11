@@ -4,11 +4,14 @@ Model of places, before ANYTHING can happen, this needs to completely load
 var cors_anywhere_url = 'https://cors-anywhere.herokuapp.com/'; // prevents CORS error
 var yt = "far-TFsqEITUllAyGc0dEMBm3BZhwktFiUmtXCuAsSuC9hU_EkKi9dx73ixbY6U9X-DNgloo53hOYT5x2pRXbG3nIBEy51Gxyw8N2kuUTWOy5PHGtfqKioIWeFVkWXYx"; // Yelp token
 var initialPlaces;
+var filteredPlaces; // after inital response
 yelpSearchResults();
 
 // get initial places from Yelp search reesults
 function yelpSearchResults() {
     var yelp_search_url = cors_anywhere_url + "https://api.yelp.com/v3/businesses/search";
+
+    var help_queries = "Lick, Venezia, Dolce Neve, Tasty Spoon, Science Cream, Amy's, Holla Mode, Bananarchy, Steel City Pops, Holy Cacao, GoodPop, Bennu, Medici, Irie, Once Over, Summermoon, Jo's, Seventh Flag, Starbucks, Fair Bean";
 
     $.ajax({
         url: yelp_search_url,
@@ -17,10 +20,11 @@ function yelpSearchResults() {
 		},
         data: {
         	term : "ice cream, coffee", 
-            location : "1710 Evergreen Ave, Austin, TX 78704",
+            location : "1102 S Congress Ave, Austin, TX 78704",
             radius : 3219,
+            limit : 48,
             sort_by : "distance",
-            limit : 2
+            price : "1,2"
         },
     }).done(function(response){
         initialPlaces = response.businesses;
@@ -56,71 +60,4 @@ function createOutput(bs) {
     });
     output += "];";
     $("#output").append(output);
-/*    
-    console.log("[");
-    bs.forEach(function(b, i){
-        console.log("{");
-        console.log("name: \"" + b.name + "\",");
-        console.log("id: \"" + b.id + "\",");
-        console.log("coordinates: {latitude: " + b.coordinates.latitude + ", longitude: " + b.coordinates.longitude + "},");
-        console.log("display_phone: \"" + b.display_phone + "\",");
-        console.log("price: \"" + b.price + "\",");
-        console.log("rating: \"" + b.rating + "\",");
-        console.log("image_url: \"" + b.image_url + "\",");
-        console.log("categories: ["); 
-        (b.categories).forEach(function(c, j){
-            var s = "{alias: " + c.alias + ", title: " + c.title;
-            if( j !== (b.categories.length-1) ) {
-                console.log(s + "}");
-            }
-            else {
-                console.log(s + "},");
-            }
-        });
-        console.log("]"); 
-        (i !== (bs.length-1)) ? console.log("},") : console.log("}");
-    });
-    console.log("];");
-*/
 }
-
-// Format for static
-
-
-/*[
-    {
-        name: "Holla Mode",
-        lat: 30.26422,
-        lng: -97.76357,
-        coldTreats: true,
-        hotDrinks: false
-    },
-    {
-        name: "The Science Cream",
-        lat: 30.2484925,
-        lng: -97.7517209,
-        coldTreats: true,
-        hotDrinks: false
-    },
-    {
-        name: "Lick Honest Ice Creams",
-        lat: 30.2556041,
-        lng: -97.7648235,
-        coldTreats: true,
-        hotDrinks: false
-    },
-    {
-        name: "The Tasty Spoon",
-        lat: 30.250431,
-        lng: -97.7567444,
-        coldTreats: true,
-        hotDrinks: true
-    },
-    {
-        name: "Summer Moon Coffee",
-        lat: 30.2332686,
-        lng: -97.7670597,
-        coldTreats: false,
-        hotDrinks: true
-    }
-]*/

@@ -24,3 +24,6 @@ Venezia Gelato
 
 Berry
 30.261823,-97.7559063
+
+Summer Moon Coffee
+30.2332686,-97.7670597

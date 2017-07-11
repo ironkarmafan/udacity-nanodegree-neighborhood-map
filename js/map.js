@@ -10,11 +10,14 @@ function initMap() {
     });
 
     // add all markers on map
+    /*
     for(var i=0; i<initialPlaces.length; i++){
         markers[i] = new google.maps.Marker({
-            position: {lat: initialPlaces[i].lat, lng: initialPlaces[i].lng},
+            position: {lat: initialPlaces[i].latitude, lng: initialPlaces[i].longitude},
             map: map,
             animation: google.maps.Animation.DROP
         });
-    }
+    } */
+
+    // TODO: Populate marker's info window with Yelp Fusion
 }

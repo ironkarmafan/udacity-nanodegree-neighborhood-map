@@ -1,5 +1,5 @@
 var map;
-var markers = [];
+//var markers = [];
 
 function initMap() {
     // create map

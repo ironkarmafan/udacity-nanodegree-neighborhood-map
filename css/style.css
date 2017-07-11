@@ -24,12 +24,11 @@ button {
     background: black;
 }
 #bloop {
-    display: none;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 0;
+    left: 0;
     width: 300px;
-    height: 300px;
+    height: 100%;
     color: white;
     background-color: black;
 }

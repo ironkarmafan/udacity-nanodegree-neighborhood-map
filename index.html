@@ -21,7 +21,9 @@
  <body>
    <div id="map"></div>
    <div id="bloop">
-     <span data-bind="click: showAll">Show All</span>
+     <p data-bind="click: showAll">Show All</p>
+     <p data-bind="click: showColdTreats">Give Me Cold Treats!</p>
+     <p data-bind="click: showHotDrinks">Give Me Hot Drinks!</p>
     <ul data-bind="foreach: placesList">
       <li data-bind="text: name, click: $parent.setPlace"></li>
     </ul>

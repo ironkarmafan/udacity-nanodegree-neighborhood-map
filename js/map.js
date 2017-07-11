@@ -4,7 +4,7 @@ var markers = [];
 function initMap() {
     // create map
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 30.261823, lng: -97.7559063},
+        center: {lat: 30.2499928, lng: -97.7658105},
         zoom: 14
     });
 

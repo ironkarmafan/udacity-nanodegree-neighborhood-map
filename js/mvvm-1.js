@@ -735,24 +735,6 @@ function formatInfoWindow(p){
 	return s;
 }
 
-/*
-function initInfoWindows() {
-	var cs;
-	var iw;
-	markers.forEach(function(m, i){
-		cs = "<div class=\"infoWindow\">" + filteredPlaces[i].name + "</div>";
-		if(iw)iw.close();
-		iw = new google.maps.InfoWindow({
-			content: cs
-		});
-		m.addListener('click', (function(iwCopy) {
-			return function(){
-				iwCopy.open(map, m);	
-			};
-		})(iw));
-	});
-}*/
-
 function viewModel() {
     var self = this;
 

@@ -646,6 +646,7 @@ var initialPlaces = [
 var filteredPlaces;
 var map;
 var markers = [];
+var iw; // info window
 
 // Initialize Everything
 function Initialize() {
@@ -657,6 +658,7 @@ function Initialize() {
 	});
 }
 
+// Excludes these places from the map app
 function filterPlaces(bs) {
     var fs = [];
     bs.forEach(function(f, i){
@@ -715,9 +717,41 @@ function initMarkers() {
             map: map,
             animation: google.maps.Animation.DROP
         });
-        markers.push(m);
+		markers.push(m);
+		makeInfoWindow(f, m);
 	});
 }
+
+function makeInfoWindow(p, m){
+	google.maps.event.addListener(m,"click",function(){
+        if(iw)iw.close();
+        iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
+        iw.open(map,m);}
+    );
+}
+
+function formatInfoWindow(p){
+	var s = "<div class=\"infoWindow\">" + p.name + "</div>";
+	return s;
+}
+
+/*
+function initInfoWindows() {
+	var cs;
+	var iw;
+	markers.forEach(function(m, i){
+		cs = "<div class=\"infoWindow\">" + filteredPlaces[i].name + "</div>";
+		if(iw)iw.close();
+		iw = new google.maps.InfoWindow({
+			content: cs
+		});
+		m.addListener('click', (function(iwCopy) {
+			return function(){
+				iwCopy.open(map, m);	
+			};
+		})(iw));
+	});
+}*/
 
 function viewModel() {
     var self = this;
@@ -733,7 +767,10 @@ function viewModel() {
             if(p.name === filteredPlaces[i].name){
 				console.log(self.placesList()[i].name);
                 markers[i].setMap(map);
-                markers[i].animation = google.maps.Animation.BOUNCE;
+				markers[i].animation = google.maps.Animation.BOUNCE;
+				if(iw)iw.close();
+				iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
+				iw.open(map, markers[i]);
             }
             else {
                 // remove marker from map
@@ -750,10 +787,12 @@ function viewModel() {
     }
 
     this.showHotDrinks = function() {
+		if(iw)iw.close();
 		filterBy("coffee");
 	};
 
     this.showColdTreats = function() {
+		if(iw)iw.close();
 		filterBy("icecream");
 	};
 	

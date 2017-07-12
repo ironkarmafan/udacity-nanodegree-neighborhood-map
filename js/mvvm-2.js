@@ -4,34 +4,37 @@ var filteredPlaces = [];
 var map;
 var markers = [];
 
-// get initial places from Yelp search reesults, initialize maps and markers
-function getPlaces() {
-    var cors_anywhere_url = 'https://cors-anywhere.herokuapp.com/'; // prevents CORS error
-    var yt = "far-TFsqEITUllAyGc0dEMBm3BZhwktFiUmtXCuAsSuC9hU_EkKi9dx73ixbY6U9X-DNgloo53hOYT5x2pRXbG3nIBEy51Gxyw8N2kuUTWOy5PHGtfqKioIWeFVkWXYx"; // Yelp token
-    var yelp_search_url = cors_anywhere_url + "https://api.yelp.com/v3/businesses/search";
+// get initial places from Yelp search reesults first, then initialize maps, markers, and view-model
+function Initialize() {
+    $(document).ready(function(){
 
-    $.ajax({
-        url: yelp_search_url,
-		beforeSend: function(xhr){
-			xhr.setRequestHeader('Authorization', 'Bearer '+yt);
-		},
-        data: {
-        	term : "ice cream, coffee", 
-            location : "1102 S Congress Ave, Austin, TX 78704",
-            radius : 3219,
-            limit : 48,
-            sort_by : "distance",
-            price : "1,2"
-        },
-    }).done(function(response){
-        initialPlaces = response.businesses;
-        filteredPlaces = filterPlaces(initialPlaces);
-        initMap();
-        ko.applyBindings(new viewModel());
-        
-    }).fail(function(error, textStatus, errorThrown){
-        console.log("Error occured while searching.");
-    	console.dir(textStatus, errorThrown);
+        var cors_anywhere_url = 'https://cors-anywhere.herokuapp.com/'; // prevents CORS error
+        var yt = "far-TFsqEITUllAyGc0dEMBm3BZhwktFiUmtXCuAsSuC9hU_EkKi9dx73ixbY6U9X-DNgloo53hOYT5x2pRXbG3nIBEy51Gxyw8N2kuUTWOy5PHGtfqKioIWeFVkWXYx"; // Yelp token
+        var yelp_search_url = cors_anywhere_url + "https://api.yelp.com/v3/businesses/search";
+
+        $.ajax({
+            url: yelp_search_url,
+            beforeSend: function(xhr){
+                xhr.setRequestHeader('Authorization', 'Bearer '+yt);
+            },
+            data: {
+                term : "ice cream, coffee", 
+                location : "1102 S Congress Ave, Austin, TX 78704",
+                radius : 3219,
+                limit : 48,
+                sort_by : "distance",
+                price : "1,2"
+            },
+        }).done(function(response){
+            initialPlaces = response.businesses;
+            filteredPlaces = filterPlaces(initialPlaces);
+            initMap();
+            ko.applyBindings(new viewModel());
+            
+        }).fail(function(error, textStatus, errorThrown){
+            console.log("Error occured while searching.");
+            console.dir(textStatus, errorThrown);
+        });
     });
 }
 

@@ -647,6 +647,16 @@ var filteredPlaces;
 var map;
 var markers = [];
 
+// Initialize Everything
+function Initialize() {
+	$(document).ready(function(){
+		filteredPlaces = filterPlaces(initialPlaces);
+		initMap();
+		initMarkers();
+		ko.applyBindings(new viewModel());
+	});
+}
+
 function filterPlaces(bs) {
     var fs = [];
     bs.forEach(function(f, i){
@@ -687,30 +697,27 @@ function filterPlaces(bs) {
     return fs;
 }
 
-filteredPlaces = filterPlaces(initialPlaces);
-
 function initMap() {
     // create map
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 30.2530171, lng: -97.7534126},
         zoom: 14,
         disableDefaultUI: true
-    });
+	});
 
-	// add all markers on map
-    for(var i=0; i<filteredPlaces.length; i++){
-        markers[i] = new google.maps.Marker({
-            position: {lat: filteredPlaces[i].coordinates.latitude, lng: filteredPlaces[i].coordinates.longitude},
+    // TODO: Populate marker's info window with data from Yelp Fusion
+}
+
+function initMarkers() {
+	filteredPlaces.forEach(function(f){
+		var m = new google.maps.Marker({
+            position: {lat: f.coordinates.latitude, lng: f.coordinates.longitude},
             map: map,
             animation: google.maps.Animation.DROP
         });
-    }
-
-    // TODO: Populate marker's info window with Yelp Fusion
+        markers.push(m);
+	});
 }
-
-//console.log(filteredPlaces);
-//console.log(initialPlaces.length);
 
 function viewModel() {
     var self = this;
@@ -724,6 +731,7 @@ function viewModel() {
     this.setPlace = function(p) {
         for(var i=0; i<filteredPlaces.length; i++){
             if(p.name === filteredPlaces[i].name){
+				console.log(self.placesList()[i].name);
                 markers[i].setMap(map);
                 markers[i].animation = google.maps.Animation.BOUNCE;
             }
@@ -742,29 +750,33 @@ function viewModel() {
     }
 
     this.showHotDrinks = function() {
-        /*for(var i=0; i<initialPlaces.length; i++){
-            if(initialPlaces[i].hotDrinks == true) {
-                markers[i].setMap(map);
-                markers[i].animation = google.maps.Animation.DROP;
-            }
-            else {
-                markers[i].setMap(null);
-            }
-        }*/
-    }
+		filterBy("coffee");
+	};
 
     this.showColdTreats = function() {
-        /*
-        for(var i=0; i<initialPlaces.length; i++){
-            if(initialPlaces[i].coldTreats == true) {
-                markers[i].setMap(map);
-                markers[i].animation = google.maps.Animation.DROP;
-            }
-            else {
-                markers[i].setMap(null);
-            }
-        }*/
-    }
-}
+		filterBy("icecream");
+	};
+	
+	function matchCategory(cs, qs) {
+		var match = false;
+		cs.forEach(function(c, i){
+			if(c.alias === qs) {
+				match = true;
+			}
+		});
+		console.log(match);
+		return(match ? true : false);
+	}
 
-ko.applyBindings(new viewModel());
+	function filterBy(qs) {
+		for(var i=0; i<filteredPlaces.length; i++){
+            if(matchCategory(filteredPlaces[i].categories, qs)){
+				markers[i].setMap(map);
+				markers[i].animation = google.maps.Animation.DROP;
+			}
+			else {
+				markers[i].setMap(null);
+            }
+		}
+	}
+}

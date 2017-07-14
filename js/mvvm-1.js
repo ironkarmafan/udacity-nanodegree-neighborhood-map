@@ -665,17 +665,13 @@ function filterPlaces(bs) {
         switch(f.id) {
             case "burro-cheese-kitchen-austin":
             case "toms-austin-5":
-            case "hey-cupcake-austin-3":
-            case "gourdoughs-austin":
             case "enoteca-vespaio-austin":
             case "big-top-candy-shop-austin":
             case "la-patisserie-austin":
             case "the-soup-peddler-real-food-and-juice-bar-austin-5":
-            case "bouldin-creek-cafe-austin":
             case "sugar-mamas-bakeshop-austin-3":
             case "la-mexicana-bakery-austin":
             case "polvos-mexican-restaurant-austin":
-            case "shake-shack-austin":
             case "thai-fresh-austin":
             case "thrice-austin":
             case "altas-cafe-austin":
@@ -687,7 +683,6 @@ function filterPlaces(bs) {
             case "piranha-killer-sushi-austin":
 			case "barley-bean-austin-3":
 			case "austin-java-austin-3":
-			case "austin-java-austin-2":
 			case "caffé-medici-austin-5":
 			case "mañana-coffee-juice-and-bakeshop-austin":
 			case "stonehouse-coffee-and-bar-austin-2":
@@ -707,10 +702,23 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 30.2530171, lng: -97.7534126},
         zoom: 14,
-        disableDefaultUI: true
+		disableDefaultUI: true,
+		styles: [
+          {
+            featureType: 'poi',
+            stylers: [{visibility: 'off'}]
+		  },
+		  {
+            featureType: 'poi.park',
+            stylers: [{visibility: 'on'}]
+          },
+          {
+            featureType: 'transit',
+            elementType: 'labels.icon',
+            stylers: [{visibility: 'off'}]
+          }
+        ]
 	});
-
-    // TODO: Populate marker's info window with data from Yelp Fusion
 }
 
 function initMarkers() {
@@ -727,14 +735,18 @@ function initMarkers() {
 
 function makeInfoWindow(p, m){
 	google.maps.event.addListener(m,"click",function(){
-        if(iw)iw.close();
-        iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
-        iw.open(map,m);}
-    );
+		m.setAnimation(null);
+		m.animation = google.maps.Animation.BOUNCE;
+		if(iw)iw.close();
+		iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
+		iw.open(map,m);
+	});
 }
 
 function formatInfoWindow(p){
-	var s = "<div class=\"infoWindow\">" + p.name + "</div>";
+	var s = "<div class=\"infoWindow\">" + 
+			"<span class=\"name\">" + p.name + "</span>" +
+	        "</div>";
 	return s;
 }
 

@@ -717,9 +717,9 @@ function initMarkers() {
             position: {lat: f.coordinates.latitude, lng: f.coordinates.longitude},
             map: map,
             animation: google.maps.Animation.DROP
-        });
-		markers.push(m);
-		makeInfoWindow(f, m);
+		});
+		f.marker = m;
+		makeInfoWindow(f, f.marker);
 	});
 }
 
@@ -745,7 +745,6 @@ function viewModel() {
 
     filteredPlaces.forEach(function(p, i){
 		self.places.push(p);
-		self.places()[i].marker = markers[i];
 	});
 
     this.setPlace = function(p) {
@@ -784,12 +783,6 @@ function viewModel() {
 			p.marker.setMap(null);
 		});
 	}
-
-	function dropMarker(m) {
-		console.log("damn");
-		m.setMap(m);
-		m.animation = google.maps.Animation.DROP;
-	}
 	
 	// shows places based on both category and name (if name exists)
     this.placesToShow = ko.computed(function() {
@@ -802,7 +795,6 @@ function viewModel() {
 				var matchNam = false;
 				if(self.placesInput() !== "") {
 					if( containsMatch(place.name) ) {
-						dropMarker(place.marker);
 						return true;
 					}
 					else {

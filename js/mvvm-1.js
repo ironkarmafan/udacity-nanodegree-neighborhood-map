@@ -646,7 +646,8 @@ var initialPlaces = [
 var filteredPlaces;
 var map;
 var markers = [];
-var iw; // info window
+// TODO: address weird bug where first element shows even after closing iw...
+var iw = null; // info window
 
 // Initialize Everything
 function Initialize() {
@@ -737,17 +738,21 @@ function formatInfoWindow(p){
 
 function viewModel() {
     var self = this;
+    this.placesInput = ko.observable("");
+    this.typeToShow = ko.observable("all");
 
-    this.placesList = ko.observableArray([]);
+    this.places = ko.observableArray([]);
 
-    filteredPlaces.forEach(function(p){
-        self.placesList.push(p);
-    });
+    filteredPlaces.forEach(function(p, i){
+		self.places.push(p);
+		self.places()[i].marker = markers[i];
+	});
 
     this.setPlace = function(p) {
+		/*
         for(var i=0; i<filteredPlaces.length; i++){
             if(p.name === filteredPlaces[i].name){
-				console.log(self.placesList()[i].name);
+				console.log(self.places()[i].name);
                 markers[i].setMap(map);
 				markers[i].animation = google.maps.Animation.BOUNCE;
 				if(iw)iw.close();
@@ -758,38 +763,96 @@ function viewModel() {
                 // remove marker from map
                 markers[i].setMap(null);
             }
-        }
-    }
-
-    this.showAll = function() {
-        markers.forEach(function(m){
-            m.setMap(map);
-            m.animation = google.maps.Animation.DROP;
-        });
-    }
-
-    this.showHotDrinks = function() {
-		if(iw)iw.close();
-		filterBy("coffee");
-	};
-
-    this.showColdTreats = function() {
-		if(iw)iw.close();
-		filterBy("icecream");
-	};
-	
-	function matchCategory(cs, qs) {
-		var match = false;
-		cs.forEach(function(c, i){
-			if(c.alias === qs) {
-				match = true;
-			}
-		});
-		console.log(match);
-		return(match ? true : false);
+		}
+		*/
+			//hideAll();
+			allNullAnimation();
+			p.marker.setMap(map);
+			p.marker.animation = google.maps.Animation.BOUNCE;
+			if(iw)iw.close();
+			iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
+			iw.open(map, p.marker);
 	}
 
-	function filterBy(qs) {
+	function allNullAnimation() {
+		self.places().forEach(function(p){
+			p.marker.setAnimation(null);
+		});
+	}
+	function hideAll() {
+		self.places().forEach(function(p){
+			p.marker.setMap(null);
+		});
+	}
+
+	function dropMarker(m) {
+		console.log("damn");
+		m.setMap(m);
+		m.animation = google.maps.Animation.DROP;
+	}
+	
+	// shows places based on both category and name (if name exists)
+    this.placesToShow = ko.computed(function() {
+		var desiredType = self.typeToShow();
+		// NOTE: matchCat and matchNam must always be local in scope (not global) to 
+	    // the arrayFilter function so that those values don't carry over
+
+        if (desiredType == "all") {
+            return(ko.utils.arrayFilter(self.places(), function(place) {
+				var matchNam = false;
+				if(self.placesInput() !== "") {
+					if( containsMatch(place.name) ) {
+						dropMarker(place.marker);
+						return true;
+					}
+					else {
+						place.marker.setMap(null);
+						return false;
+					}
+				}
+				return true;
+			}));
+		}
+		if (desiredType == "all") {
+			return self.places();
+		}
+        
+        // if match is found, add to list of places to be shown
+        return(ko.utils.arrayFilter(self.places(), function(place) {
+			var matchCat = false;
+			var matchNam = false;
+            (place.categories).forEach(function(category){
+				if(category.alias == desiredType) {
+					matchCat = true;
+				}
+			});
+			// matchCat should always be true before checking for matchNam
+			if(matchCat == true) {
+				if(self.placesInput() !== "") {
+					matchNam = containsMatch(place.name);
+					return (matchNam ? true : false);
+				}
+				return true;
+			}
+			else
+				return false;
+        }));
+	}, this);
+
+	// Return if partial input string matches given name
+	function containsMatch(n) {
+		var ln = n.toLowerCase();
+		var li = (self.placesInput()).toLowerCase();
+		if((ln).search(li) > -1) {
+			return true;
+		}
+	}
+ 
+    // Show/hide callbacks for the places list
+    this.showPlace = function(elem) { $(elem).show() }
+    this.hidePlace = function(elem) { $(elem).hide() }
+
+	/*function filterBy(qs) {
 		for(var i=0; i<filteredPlaces.length; i++){
             if(matchCategory(filteredPlaces[i].categories, qs)){
 				markers[i].setMap(map);
@@ -799,5 +862,5 @@ function viewModel() {
 				markers[i].setMap(null);
             }
 		}
-	}
+	}*/
 }

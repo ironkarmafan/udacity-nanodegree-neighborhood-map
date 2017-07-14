@@ -11,13 +11,17 @@
 <body>
     <div id="map"></div>
     <div id="bloop">
-        <ul>
-            <li data-bind="click: showAll">Show All</li>
-            <li data-bind="click: showColdTreats">Show Me Cold Treats!</li>
-            <li data-bind="click: showHotDrinks">Give Me Hot Drinks!</li>
-        </ul>
-        <ul data-bind="foreach: placesList">
-            <li data-bind="text: name, click: $parent.setPlace"></li>
+        <input type="text" data-bind="textInput: placesInput" />
+        <p>
+            Show:
+            <label><input type='radio' value='all' data-bind='checked: typeToShow' />All</label>
+            <label><input type='radio' value='coffee' data-bind='checked: typeToShow' />Coffee</label>
+            <label><input type='radio' value='icecream' data-bind='checked: typeToShow' />Ice Cream</label>
+        </p>
+        <ul data-bind='template: { foreach: placesToShow,
+                                    beforeRemove: hidePlace,
+                                    afterAdd: showPlace }'>
+            <li data-bind='attr: { "class": "place " }, text: name, click: $parent.setPlace'> </li>
         </ul>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

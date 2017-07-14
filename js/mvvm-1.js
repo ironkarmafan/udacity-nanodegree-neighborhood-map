@@ -749,22 +749,6 @@ function viewModel() {
 	});
 
     this.setPlace = function(p) {
-		/*
-        for(var i=0; i<filteredPlaces.length; i++){
-            if(p.name === filteredPlaces[i].name){
-				console.log(self.places()[i].name);
-                markers[i].setMap(map);
-				markers[i].animation = google.maps.Animation.BOUNCE;
-				if(iw)iw.close();
-				iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
-				iw.open(map, markers[i]);
-            }
-            else {
-                // remove marker from map
-                markers[i].setMap(null);
-            }
-		}
-		*/
 			//hideAll();
 			allNullAnimation();
 			p.marker.setMap(map);
@@ -853,16 +837,4 @@ function viewModel() {
     // Show/hide callbacks for the places list
     this.showPlace = function(elem) { $(elem).show() }
     this.hidePlace = function(elem) { $(elem).hide() }
-
-	/*function filterBy(qs) {
-		for(var i=0; i<filteredPlaces.length; i++){
-            if(matchCategory(filteredPlaces[i].categories, qs)){
-				markers[i].setMap(map);
-				markers[i].animation = google.maps.Animation.DROP;
-			}
-			else {
-				markers[i].setMap(null);
-            }
-		}
-	}*/
 }

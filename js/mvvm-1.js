@@ -645,8 +645,6 @@ var initialPlaces = [
 
 var filteredPlaces;
 var map;
-var markers = [];
-// TODO: address weird bug where first element shows even after closing iw...
 var iw = null; // info window
 
 // Initialize Everything

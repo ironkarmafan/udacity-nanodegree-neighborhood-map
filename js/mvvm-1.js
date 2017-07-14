@@ -656,6 +656,7 @@ function Initialize() {
 		initMap();
 		initMarkers();
 		ko.applyBindings(new viewModel());
+		console.log(filteredPlaces);
 	});
 }
 
@@ -795,6 +796,7 @@ function viewModel() {
 				var matchNam = false;
 				if(self.placesInput() !== "") {
 					if( containsMatch(place.name) ) {
+						place.marker.setMap(map);
 						return true;
 					}
 					else {
@@ -802,11 +804,9 @@ function viewModel() {
 						return false;
 					}
 				}
+				place.marker.setMap(map);
 				return true;
 			}));
-		}
-		if (desiredType == "all") {
-			return self.places();
 		}
         
         // if match is found, add to list of places to be shown
@@ -821,13 +821,23 @@ function viewModel() {
 			// matchCat should always be true before checking for matchNam
 			if(matchCat == true) {
 				if(self.placesInput() !== "") {
-					matchNam = containsMatch(place.name);
-					return (matchNam ? true : false);
+					if( containsMatch(place.name) )
+					{
+						place.marker.setMap(map);
+						return true;
+					}
+					else {
+						place.marker.setMap(null);
+						return false;
+					}
 				}
+				place.marker.setMap(map);
 				return true;
 			}
-			else
+			else {
+				place.marker.setMap(null);
 				return false;
+			}
         }));
 	}, this);
 

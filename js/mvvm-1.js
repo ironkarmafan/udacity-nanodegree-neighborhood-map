@@ -772,12 +772,9 @@ function viewModel() {
 	// shows places based on both category and name (if name exists)
     this.placesToShow = ko.computed(function() {
 		var desiredType = self.typeToShow();
-		// NOTE: matchCat and matchNam must always be local in scope (not global) to 
-	    // the arrayFilter function so that those values don't carry over
-
+		if(iw)iw.close();
         if (desiredType == "all") {
             return(ko.utils.arrayFilter(self.places(), function(place) {
-				var matchNam = false;
 				if(self.placesInput() !== "") {
 					if( containsMatch(place.name) ) {
 						place.marker.setMap(map);
@@ -796,7 +793,6 @@ function viewModel() {
         // if match is found, add to list of places to be shown
         return(ko.utils.arrayFilter(self.places(), function(place) {
 			var matchCat = false;
-			var matchNam = false;
             (place.categories).forEach(function(category){
 				if(category.alias == desiredType) {
 					matchCat = true;

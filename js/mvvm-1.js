@@ -692,8 +692,11 @@ function filterPlaces(bs) {
 			case "mañana-coffee-juice-and-bakeshop-austin":
 			case "stonehouse-coffee-and-bar-austin-2":
                 break;
-        default:
-            fs.push(f);
+		default:
+		    // if coordinates are not NULL add
+            if(typeof f.coordinates.latitude === 'number' && typeof f.coordinates.longitude === 'number') {
+                fs.push(f);
+            }
         }
     });
     return fs;
@@ -737,23 +740,22 @@ function formatInfoWindow(p){
 
 function viewModel() {
     var self = this;
-    this.placesInput = ko.observable("");
+	this.placesInput = ko.observable("");
+	var defaultInput = "";
     this.typeToShow = ko.observable("all");
-
-    this.places = ko.observableArray([]);
+	this.places = ko.observableArray([]);
 
     filteredPlaces.forEach(function(p, i){
 		self.places.push(p);
 	});
 
     this.setPlace = function(p) {
-			//hideAll();
-			allNullAnimation();
-			p.marker.setMap(map);
-			p.marker.animation = google.maps.Animation.BOUNCE;
-			if(iw)iw.close();
-			iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
-			iw.open(map, p.marker);
+		allNullAnimation();
+		p.marker.setMap(map);
+		p.marker.animation = google.maps.Animation.BOUNCE;
+		if(iw)iw.close();
+		iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
+		iw.open(map, p.marker);
 	}
 
 	function allNullAnimation() {
@@ -773,8 +775,8 @@ function viewModel() {
 		if(iw)iw.close();
         if (desiredType == "all") {
             return(ko.utils.arrayFilter(self.places(), function(place) {
-				if(self.placesInput() !== "") {
-					if( containsMatch(place.name) ) {
+				if(self.placesInput() !== defaultInput) {
+					if( containsMatch(place.name) || categoryMatch(place.categories) ) {
 						place.marker.setMap(map);
 						return true;
 					}
@@ -796,11 +798,10 @@ function viewModel() {
 					matchCat = true;
 				}
 			});
-			// matchCat should always be true before checking for matchNam
+			// matchCat should always be true before checking for matched input
 			if(matchCat == true) {
-				if(self.placesInput() !== "") {
-					if( containsMatch(place.name) )
-					{
+				if(self.placesInput() !== defaultInput) {
+					if( containsMatch(place.name) || categoryMatch(place.categories) ) {
 						place.marker.setMap(map);
 						return true;
 					}
@@ -819,11 +820,22 @@ function viewModel() {
         }));
 	}, this);
 
-	// Return if partial input string matches given name
-	function containsMatch(n) {
-		var ln = n.toLowerCase();
+	// Return if partial input string matches given category titles
+	function categoryMatch(cs) {
+		var match = false;
+		cs.forEach(function(c){
+			if( containsMatch(c.title) ) {
+				match = true;
+			}
+		});
+		return match;
+	}
+
+	// Return if partial input string matches given name (or title)
+	function containsMatch(s) {
+		var ls = s.toLowerCase();
 		var li = (self.placesInput()).toLowerCase();
-		if((ln).search(li) > -1) {
+		if((ls).search(li) > -1) {
 			return true;
 		}
 	}

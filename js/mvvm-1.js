@@ -747,37 +747,29 @@ function viewModel() {
 	});
 
 	// initialize place info windows
-	function initInfoWindows() {
-		self.places().forEach(function(p){
-			google.maps.event.addListener(p.marker,"click",function(){
-				self.setPlace(p);
-			});
+	self.places().forEach(function(p){
+		google.maps.event.addListener(p.marker,"click",function(){
+			self.markPlace(p);
 		});
-	}
-
-	initInfoWindows();
+	});
 
 	// display one marker only
-    this.setPlace = function(p) {
-		allNullAnimation();
-		p.marker.setMap(map);
-		p.marker.animation = google.maps.Animation.BOUNCE;
-		if(iw)iw.close();
-		iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
-		iw.open(map, p.marker);
-	}
+    this.markPlace = function(p) {
+		// specified marker bounces and cancels other marker animations
+		self.places().forEach(function(h){
+			if(p.id === h.id) {
 
-	// utility function, cancels all marker animations
-	function allNullAnimation() {
-		self.places().forEach(function(p){
-			p.marker.setAnimation(null);
-		});
-	}
+				p.marker.setMap(map);
+				p.marker.setAnimation(google.maps.Animation.BOUNCE);
 
-	// utility function, hides all the markers
-	function hideAll() {
-		self.places().forEach(function(p){
-			p.marker.setMap(null);
+				// open info window
+				if(iw)iw.close();
+				iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
+				iw.open(map, p.marker);
+			}
+			else {
+				h.marker.setAnimation(null);
+			}
 		});
 	}
 
@@ -792,48 +784,48 @@ function viewModel() {
     this.placesToShow = ko.computed(function() {
 		var desiredType = self.typeToShow();
 		if(iw)iw.close();
-        if (desiredType == "all") {
-            return(ko.utils.arrayFilter(self.places(), function(place) {
+        if (desiredType === "all") {
+            return(ko.utils.arrayFilter(self.places(), function(p) {
 				if(self.placesInput() !== defaultInput) {
-					if( containsMatch(place.name) || categoryMatch(place.categories) ) {
-						place.marker.setMap(map);
+					if( containsMatch(p.name) || categoryMatch(p.categories) ) {
+						p.marker.setMap(map);
 						return true;
 					}
 					else {
-						place.marker.setMap(null);
+						p.marker.setMap(null);
 						return false;
 					}
 				}
-				place.marker.setMap(map);
+				p.marker.setMap(map);
 				return true;
 			}));
 		}
         
         // if match is found, add to list of places to be shown
-        return(ko.utils.arrayFilter(self.places(), function(place) {
+        return(ko.utils.arrayFilter(self.places(), function(p) {
 			var matchCat = false;
-            (place.categories).forEach(function(category){
-				if(category.alias == desiredType) {
+            (p.categories).forEach(function(c){
+				if(c.alias === desiredType) {
 					matchCat = true;
 				}
 			});
 			// matchCat should always be true before checking for matched input
 			if(matchCat == true) {
 				if(self.placesInput() !== defaultInput) {
-					if( containsMatch(place.name) || categoryMatch(place.categories) ) {
-						place.marker.setMap(map);
+					if( containsMatch(p.name) || categoryMatch(p.categories) ) {
+						p.marker.setMap(map);
 						return true;
 					}
 					else {
-						place.marker.setMap(null);
+						p.marker.setMap(null);
 						return false;
 					}
 				}
-				place.marker.setMap(map);
+				p.marker.setMap(map);
 				return true;
 			}
 			else {
-				place.marker.setMap(null);
+				p.marker.setMap(null);
 				return false;
 			}
         }));
@@ -860,6 +852,10 @@ function viewModel() {
 	}
  
     // Show/hide callbacks for the places list
-    this.showPlace = function(elem) { $(elem).show() }
-    this.hidePlace = function(elem) { $(elem).hide() }
+    this.showPlace = function(elem) {
+		$(elem).show()
+	}
+    this.hidePlace = function(elem) {
+		$(elem).hide()
+	}
 }

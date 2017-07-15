@@ -753,19 +753,19 @@ function viewModel() {
 		});
 	});
 
-	// display one marker only
+	// animate marker and display its info window
     this.markPlace = function(p) {
-		// specified marker bounces and cancels other marker animations
+        p.marker.setMap(map);
+
+        // open info window
+        if(iw)iw.close();
+        iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
+        iw.open(map, p.marker);
+
+        // specified marker bounces and cancels other marker animations
 		self.places().forEach(function(h){
 			if(p.id === h.id) {
-
-				p.marker.setMap(map);
 				p.marker.setAnimation(google.maps.Animation.BOUNCE);
-
-				// open info window
-				if(iw)iw.close();
-				iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
-				iw.open(map, p.marker);
 			}
 			else {
 				h.marker.setAnimation(null);

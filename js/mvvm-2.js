@@ -1,3 +1,4 @@
+var initialPlaces;
 var filteredPlaces;
 var map;
 var iw; // info window
@@ -39,24 +40,20 @@ function Initialize() {
 }
 
 // Excludes these places from the map app
-function filterPlaces(bs) {
+function filterPlaces(ps) {
     var fs = [];
-    bs.forEach(function(f, i){
-        // if any of these places, exclude
+    ps.forEach(function(f, i){
         switch(f.id) {
-            case "burro-cheese-kitchen-austin":
+			case "burro-cheese-kitchen-austin":
+			case "shake-shack-austin":
             case "toms-austin-5":
-            case "hey-cupcake-austin-3":
-            case "gourdoughs-austin":
             case "enoteca-vespaio-austin":
             case "big-top-candy-shop-austin":
             case "la-patisserie-austin":
             case "the-soup-peddler-real-food-and-juice-bar-austin-5":
-            case "bouldin-creek-cafe-austin":
             case "sugar-mamas-bakeshop-austin-3":
             case "la-mexicana-bakery-austin":
             case "polvos-mexican-restaurant-austin":
-            case "shake-shack-austin":
             case "thai-fresh-austin":
             case "thrice-austin":
             case "altas-cafe-austin":
@@ -68,13 +65,12 @@ function filterPlaces(bs) {
             case "piranha-killer-sushi-austin":
 			case "barley-bean-austin-3":
 			case "austin-java-austin-3":
-			case "austin-java-austin-2":
 			case "caffé-medici-austin-5":
 			case "mañana-coffee-juice-and-bakeshop-austin":
 			case "stonehouse-coffee-and-bar-austin-2":
                 break;
-        default:
-            // if coordinates are not NULL add
+		default:
+		    // if coordinates are not NULL add
             if(typeof f.coordinates.latitude === 'number' && typeof f.coordinates.longitude === 'number') {
                 fs.push(f);
             }
@@ -88,13 +84,27 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 30.2530171, lng: -97.7534126},
         zoom: 14,
-        disableDefaultUI: true
+		disableDefaultUI: true,
+		styles: [
+          {
+            featureType: 'poi',
+            stylers: [{visibility: 'off'}]
+		  },
+		  {
+            featureType: 'poi.park',
+            stylers: [{visibility: 'on'}]
+          },
+          {
+            featureType: 'transit',
+            elementType: 'labels.icon',
+            stylers: [{visibility: 'off'}]
+          }
+        ]
 	});
-
-    // TODO: Populate marker's info window with data from Yelp Fusion
 }
 
 function initMarkers() {
+	// create markers and assign to associated filtered place
 	filteredPlaces.forEach(function(f){
 		var m = new google.maps.Marker({
             position: {lat: f.coordinates.latitude, lng: f.coordinates.longitude},
@@ -102,117 +112,131 @@ function initMarkers() {
             animation: google.maps.Animation.DROP
 		});
 		f.marker = m;
-		makeInfoWindow(f, f.marker);
 	});
-}
-
-function makeInfoWindow(p, m){
-	google.maps.event.addListener(m,"click",function(){
-        if(iw)iw.close();
-        iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
-        iw.open(map,m);}
-    );
-}
-
-function formatInfoWindow(p){
-	var s = "<div class=\"infoWindow\">" + p.name + "</div>";
-	return s;
 }
 
 function viewModel() {
     var self = this;
-    this.placesInput = ko.observable("");
+	this.placesInput = ko.observable("");
+	var defaultInput = "";
     this.typeToShow = ko.observable("all");
+	this.places = ko.observableArray([]);
 
-    this.places = ko.observableArray([]);
-
+	// populate places
     filteredPlaces.forEach(function(p, i){
 		self.places.push(p);
 	});
 
-    this.setPlace = function(p) {
-			//hideAll();
-			allNullAnimation();
-			p.marker.setMap(map);
-			p.marker.animation = google.maps.Animation.BOUNCE;
-			if(iw)iw.close();
-			iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
-			iw.open(map, p.marker);
+	// initialize place info windows
+	self.places().forEach(function(p){
+		google.maps.event.addListener(p.marker,"click",function(){
+			self.markPlace(p);
+		});
+	});
+
+	// animate marker and display its info window
+    this.markPlace = function(p) {
+        p.marker.setMap(map);
+
+        // open info window
+        if(iw)iw.close();
+        iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
+        iw.open(map, p.marker);
+
+        // specified marker bounces and cancels other marker animations
+		self.places().forEach(function(h){
+			if(p.id === h.id) {
+				p.marker.setAnimation(google.maps.Animation.BOUNCE);
+			}
+			else {
+				h.marker.setAnimation(null);
+			}
+		});
 	}
 
-	function allNullAnimation() {
-		self.places().forEach(function(p){
-			p.marker.setAnimation(null);
-		});
-	}
-	function hideAll() {
-		self.places().forEach(function(p){
-			p.marker.setMap(null);
-		});
+	function formatInfoWindow(p){
+		var s = "<div class=\"infoWindow\">" + 
+				"<span class=\"name\">" + p.name + "</span>" +
+				"</div>";
+		return s;
 	}
 	
 	// shows places based on both category and name (if name exists)
     this.placesToShow = ko.computed(function() {
 		var desiredType = self.typeToShow();
 		if(iw)iw.close();
-        if (desiredType == "all") {
-            return(ko.utils.arrayFilter(self.places(), function(place) {
-				if(self.placesInput() !== "") {
-					if( containsMatch(place.name) ) {
-						place.marker.setMap(map);
+        if (desiredType === "all") {
+            return(ko.utils.arrayFilter(self.places(), function(p) {
+				if(self.placesInput() !== defaultInput) {
+					if( containsMatch(p.name) || categoryMatch(p.categories) ) {
+						p.marker.setMap(map);
 						return true;
 					}
 					else {
-						place.marker.setMap(null);
+						p.marker.setMap(null);
 						return false;
 					}
 				}
-				place.marker.setMap(map);
+				p.marker.setMap(map);
 				return true;
 			}));
 		}
         
         // if match is found, add to list of places to be shown
-        return(ko.utils.arrayFilter(self.places(), function(place) {
+        return(ko.utils.arrayFilter(self.places(), function(p) {
 			var matchCat = false;
-            (place.categories).forEach(function(category){
-				if(category.alias == desiredType) {
+            (p.categories).forEach(function(c){
+				if(c.alias === desiredType) {
 					matchCat = true;
 				}
 			});
-			// matchCat should always be true before checking for matchNam
+			// matchCat should always be true before checking for matched input
 			if(matchCat == true) {
-				if(self.placesInput() !== "") {
-					if( containsMatch(place.name) )
-					{
-						place.marker.setMap(map);
+				if(self.placesInput() !== defaultInput) {
+					if( containsMatch(p.name) || categoryMatch(p.categories) ) {
+						p.marker.setMap(map);
 						return true;
 					}
 					else {
-						place.marker.setMap(null);
+						p.marker.setMap(null);
 						return false;
 					}
 				}
-				place.marker.setMap(map);
+				p.marker.setMap(map);
 				return true;
 			}
 			else {
-				place.marker.setMap(null);
+				p.marker.setMap(null);
 				return false;
 			}
         }));
 	}, this);
 
-	// Return if partial input string matches given name
-	function containsMatch(n) {
-		var ln = n.toLowerCase();
+	// Return if partial input string matches given category titles
+	function categoryMatch(cs) {
+		var match = false;
+		cs.forEach(function(c){
+			if( containsMatch(c.title) ) {
+				match = true;
+			}
+		});
+		return match;
+	}
+
+	// Return if partial input string matches given name (or title)
+	function containsMatch(s) {
+		var ls = s.toLowerCase();
 		var li = (self.placesInput()).toLowerCase();
-		if((ln).search(li) > -1) {
+		if((ls).search(li) > -1) {
 			return true;
 		}
 	}
  
     // Show/hide callbacks for the places list
-    this.showPlace = function(elem) { $(elem).show() }
-    this.hidePlace = function(elem) { $(elem).hide() }
+    this.showPlace = function(p) {
+		$(p).show()
+	}
+    this.hidePlace = function(p) {
+		$(p).hide()
+	}
 }

@@ -659,9 +659,9 @@ function Initialize() {
 }
 
 // Excludes these places from the map app
-function filterPlaces(bs) {
+function filterPlaces(ps) {
     var fs = [];
-    bs.forEach(function(f, i){
+    ps.forEach(function(f, i){
         switch(f.id) {
 			case "burro-cheese-kitchen-austin":
 			case "shake-shack-austin":
@@ -852,10 +852,10 @@ function viewModel() {
 	}
  
     // Show/hide callbacks for the places list
-    this.showPlace = function(elem) {
-		$(elem).show()
+    this.showPlace = function(p) {
+		$(p).show()
 	}
-    this.hidePlace = function(elem) {
-		$(elem).hide()
+    this.hidePlace = function(p) {
+		$(p).hide()
 	}
 }

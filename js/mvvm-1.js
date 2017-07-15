@@ -663,7 +663,8 @@ function filterPlaces(bs) {
     var fs = [];
     bs.forEach(function(f, i){
         switch(f.id) {
-            case "burro-cheese-kitchen-austin":
+			case "burro-cheese-kitchen-austin":
+			case "shake-shack-austin":
             case "toms-austin-5":
             case "enoteca-vespaio-austin":
             case "big-top-candy-shop-austin":
@@ -722,6 +723,7 @@ function initMap() {
 }
 
 function initMarkers() {
+	// create markers and assign to associated filtered place
 	filteredPlaces.forEach(function(f){
 		var m = new google.maps.Marker({
             position: {lat: f.coordinates.latitude, lng: f.coordinates.longitude},
@@ -729,25 +731,7 @@ function initMarkers() {
             animation: google.maps.Animation.DROP
 		});
 		f.marker = m;
-		makeInfoWindow(f, f.marker);
 	});
-}
-
-function makeInfoWindow(p, m){
-	google.maps.event.addListener(m,"click",function(){
-		m.setAnimation(null);
-		m.animation = google.maps.Animation.BOUNCE;
-		if(iw)iw.close();
-		iw=new google.maps.InfoWindow({content: formatInfoWindow(p)});
-		iw.open(map,m);
-	});
-}
-
-function formatInfoWindow(p){
-	var s = "<div class=\"infoWindow\">" + 
-			"<span class=\"name\">" + p.name + "</span>" +
-	        "</div>";
-	return s;
 }
 
 function viewModel() {
@@ -757,10 +741,23 @@ function viewModel() {
     this.typeToShow = ko.observable("all");
 	this.places = ko.observableArray([]);
 
+	// populate places
     filteredPlaces.forEach(function(p, i){
 		self.places.push(p);
 	});
 
+	// initialize place info windows
+	function initInfoWindows() {
+		self.places().forEach(function(p){
+			google.maps.event.addListener(p.marker,"click",function(){
+				self.setPlace(p);
+			});
+		});
+	}
+
+	initInfoWindows();
+
+	// display one marker only
     this.setPlace = function(p) {
 		allNullAnimation();
 		p.marker.setMap(map);
@@ -770,15 +767,25 @@ function viewModel() {
 		iw.open(map, p.marker);
 	}
 
+	// utility function, cancels all marker animations
 	function allNullAnimation() {
 		self.places().forEach(function(p){
 			p.marker.setAnimation(null);
 		});
 	}
+
+	// utility function, hides all the markers
 	function hideAll() {
 		self.places().forEach(function(p){
 			p.marker.setMap(null);
 		});
+	}
+
+	function formatInfoWindow(p){
+		var s = "<div class=\"infoWindow\">" + 
+				"<span class=\"name\">" + p.name + "</span>" +
+				"</div>";
+		return s;
 	}
 	
 	// shows places based on both category and name (if name exists)

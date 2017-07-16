@@ -650,11 +650,15 @@ var iw = null; // info window
 // Initialize Everything
 function Initialize() {
 	$(document).ready(function(){
+		// responsive nav
+		$(".toggleNav").on("click", function(){
+			$("#placesNav").toggleClass("show");
+		});
+
 		filteredPlaces = filterPlaces(initialPlaces);
 		initMap();
 		initMarkers();
 		ko.applyBindings(new viewModel());
-		console.log(filteredPlaces);
 	});
 }
 
@@ -701,8 +705,8 @@ function filterPlaces(ps) {
 function initMap() {
     // create map
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 30.2530171, lng: -97.7534126},
-        zoom: 14,
+        center: {lat: 30.2548333, lng: -97.7548521},
+        zoom: 15,
 		disableDefaultUI: true,
 		styles: [
           {

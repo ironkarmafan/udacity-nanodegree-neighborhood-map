@@ -5,7 +5,17 @@ html, body {
 }
 
 #map {
+    position: absolute;
+    right: 0;
+    width: 100%;
     height: 100%;
+    overflow: scroll;
+}
+@media screen and (min-width: 769px) {
+    #map {
+        width: 100%;
+        width: calc(100% - 300px);
+    }
 }
 #output {
     visibility: hidden;
@@ -15,20 +25,43 @@ html, body {
     top: 0;
     left: 0;
 }
-button {
-    display: none;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    color: white;
-    background: black;
-}
-#bloop {
+#placesNav {
     position: absolute;
     top: 0;
-    left: 0;
+    left: -300px;
     width: 300px;
     height: 100%;
     color: white;
     background-color: black;
+    z-index: 3;
+    transition: .4s left ease-out;
+}
+
+    #placesNav.show {
+        left: 0;
+    }
+
+@media screen and (min-width: 769px) {
+    #placesNav,
+    #placesNav.show {
+        left: 0;
+        transition: unset;
+    }
+}
+
+.toggleNav {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 0;
+    right: -50px;
+    border: 0 none;
+    background: red;
+    outline: 0;
+}
+
+@media screen and (min-width: 769px) {
+    .toggleNav {
+        display: none;
+    }
 }

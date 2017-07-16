@@ -65,3 +65,42 @@ html, body {
         display: none;
     }
 }
+
+
+.infoWindow {
+    position: absolute;
+    right: 10px;
+    top: 50px;
+    padding: 20px;
+    width: 200px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.yelpStars {
+    width: 132px;
+    height: 24px;
+    margin: 0 auto;
+    background-image: url(../img/yelp-stars.png);
+}
+
+.yelpStars.oneStar {
+    background-position-y: 120px;
+}
+
+.yelpStars.twoStars {
+    background-position-y: 96px;
+}
+
+.yelpStars.threeStars {
+    background-position-y: 72px;
+}
+
+.yelpStars.fourStars {
+    background-position-y: 48px;
+}
+
+.yelpStars.fiveStars {
+    background-position-y: 24px;
+}
+

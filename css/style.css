@@ -77,29 +77,46 @@ html, body {
 }
 
 .yelpStars {
-    width: 132px;
-    height: 24px;
+    display: inline-block;
+    width: 102px;
+    height: 18px;
     background-image: url(../img/yelp-stars.png);
 }
 
 /* TODO: update to include half stars */
 .yelpStars.oneStar {
-    background-position-y: 120px;
+    background-position-y: 162px;
+}
+
+.yelpStars.oneHalfStar {
+    background-position-y: 144px;
 }
 
 .yelpStars.twoStars {
-    background-position-y: 96px;
+    background-position-y: 126px;
+}
+
+.yelpStars.twoHalfStars {
+    background-position-y: 108px;
 }
 
 .yelpStars.threeStars {
+    background-position-y: 90px;
+}
+
+.yelpStars.threeHalfStars {
     background-position-y: 72px;
 }
 
 .yelpStars.fourStars {
-    background-position-y: 48px;
+    background-position-y: 54px;
+}
+
+.yelpStars.fourHalfStars {
+    background-position-y: 36px;
 }
 
 .yelpStars.fiveStars {
-    background-position-y: 24px;
+    background-position-y: 18px;
 }
 

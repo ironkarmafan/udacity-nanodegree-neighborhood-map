@@ -786,7 +786,7 @@ function viewModel() {
 		var s = "<div class=\"infoWindowContent\">" + 
 				"<a class=\"name\" title=\"" + p.name + "\" href=\"" + p.url + "\">" + p.name + "</a>" +
 				"<p><div class=\"yelpStars " + stars + "\"></div>" +
-				"<span class=\"reviewCount\">Reviews: " + p.review_count + "</span></p>" +
+				"<span class=\"reviewCount\"> Reviews: " + p.review_count + "</span></p>" +
 				"<p><span class=\"price\">" + p.price + "</span> · " +
 				"<span class=\"category\">" + p.categories[0].title + "</span></p>" +
 				address +

@@ -11,6 +11,11 @@ function Initialize() {
         var yt = "far-TFsqEITUllAyGc0dEMBm3BZhwktFiUmtXCuAsSuC9hU_EkKi9dx73ixbY6U9X-DNgloo53hOYT5x2pRXbG3nIBEy51Gxyw8N2kuUTWOy5PHGtfqKioIWeFVkWXYx"; // Yelp token
         var yelp_search_url = cors_anywhere_url + "https://api.yelp.com/v3/businesses/search";
 
+        // responsive nav
+		$(".toggleNav").on("click", function(){
+			$("#placesNav").toggleClass("show");
+		});
+
         $.ajax({
             url: yelp_search_url,
             beforeSend: function(xhr){
@@ -82,8 +87,8 @@ function filterPlaces(ps) {
 function initMap() {
     // create map
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 30.2530171, lng: -97.7534126},
-        zoom: 14,
+        center: {lat: 30.2548333, lng: -97.7548521},
+        zoom: 15,
 		disableDefaultUI: true,
 		styles: [
           {
@@ -163,7 +168,7 @@ function viewModel() {
 		var s = "<div class=\"infoWindowContent\">" + 
 				"<a class=\"name\" title=\"" + p.name + "\" href=\"" + p.url + "\">" + p.name + "</a>" +
 				"<p><div class=\"yelpStars " + stars + "\"></div>" +
-				"<span class=\"reviewCount\">Reviews: " + p.review_count + "</span></p>" +
+				"<span class=\"reviewCount\"> Reviews: " + p.review_count + "</span></p>" +
 				"<p><span class=\"price\">" + p.price + "</span> · " +
 				"<span class=\"category\">" + p.categories[0].title + "</span></p>" +
 				address +

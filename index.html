@@ -10,10 +10,64 @@
 </head>
 <body>
     <div id="map"></div>
-    <div class="infoWindow">
-        <div class="yelpStars">
+    <!--
+    <div style="z-index: 4; position: absolute; top: 0px; left: 0px; width: 100%; transform-origin: 272px 273px 0px; transform: matrix(1, 0, 0, 1, 40, 0);">
+        <div style="position: absolute; left: 0px; top: 0px; z-index: 104; width: 100%;"></div>
+        <div style="position: absolute; left: 0px; top: 0px; z-index: 105; width: 100%;"></div>
+        <div style="position: absolute; left: 0px; top: 0px; z-index: 106; width: 100%;">
+            <div class="gmnoprint" title="" style="width: 38px; height: 56px; overflow: hidden; position: absolute; opacity: 0.01; cursor: pointer; left: 73px; top: 204px; z-index: 252;"><img src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi_hdpi.png" draggable="false" style="position: absolute; left: 0px; top: 0px; width: 38px; height: 56px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
         </div>
-    </div>
+        <div style="position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;">
+            <div style="cursor: default; position: absolute; width: 253px; height: 66px; left: -34px; top: 122px; z-index: 122;">
+                <div style="position: absolute; left: 0px; top: 0px;">
+                    <div style="width: 0px; height: 0px; border-right: 10px solid transparent; border-left: 10px solid transparent; border-top: 24px solid rgba(0, 0, 0, 0.1); position: absolute; left: 117px; top: 66px;"></div>
+                    <div style="position: absolute; left: 0px; top: 0px; background-color: rgba(0, 0, 0, 0.2); border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; width: 253px; height: 66px;"></div>
+                    <div style="border-top-width: 24px; position: absolute; left: 117px; top: 63px;">
+                        <div style="position: absolute; overflow: hidden; left: -6px; top: -1px; width: 16px; height: 30px;">
+                            <div style="position: absolute; left: 6px; background-color: rgb(255, 255, 255); transform: skewX(22.6deg); transform-origin: 0px 0px 0px; height: 24px; width: 10px; box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 6px;"></div>
+                        </div>
+                        <div style="position: absolute; overflow: hidden; top: -1px; left: 10px; width: 16px; height: 30px;">
+                            <div style="position: absolute; left: 0px; background-color: rgb(255, 255, 255); transform: skewX(-22.6deg); transform-origin: 10px 0px 0px; height: 24px; width: 10px; box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 6px;"></div>
+                        </div>
+                    </div>
+                    <div style="position: absolute; left: 1px; top: 1px; border-radius: 2px; background-color: rgb(255, 255, 255); width: 251px; height: 64px;"></div>
+                </div>
+                <div class="gm-style-iw" style="top: 9px; position: absolute; left: 15px; width: 223px;">
+                    <div style="display: inline-block; overflow: auto; max-height: 464px; max-width: 490px;">
+                        <div style="overflow: auto;">
+
+
+
+
+
+                            <div class="infoWindowContent">
+                                <a class="name" title="Lick Honest Ice Creams">Lick Honest Ice Creams</a>
+                                <div class="yelpStars"></div>
+                                <span class="reviewCount"></span>
+                                <span class="price">$$</span>
+                                <span class="category">Ice Cream & Yogurt</span>
+                                <span class="address1"></span>
+                                <span class="address2"></span>
+                                <span class="address3"></span>
+                                <span class="city"></span>
+                                <span class="state"></span>
+                                <span class="zip"></span>
+                                <a href="#" class="telephone">tel:+2222222222</a>
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div style="border-top: 1px solid rgb(204, 204, 204); margin-top: 9px; padding: 6px; visibility: hidden; font-size: 13px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; font-family: Roboto, Arial; display: none;"><a href="" target="_blank" style="cursor: pointer; color: rgb(66, 127, 237); text-decoration: none;">View on Google Maps</a></div>
+                </div>
+                <div style="width: 13px; height: 13px; overflow: hidden; position: absolute; opacity: 0.7; right: 12px; top: 10px; z-index: 10000;"><img src="https://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png" draggable="false" style="position: absolute; left: -2px; top: -336px; width: 59px; height: 492px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div>
+                <img src="https://maps.gstatic.com/mapfiles/transparent.png" draggable="false" style="width: 37px; height: 37px; user-select: none; border: 0px; padding: 0px; margin: 0px; position: absolute; right: 0px; top: -2px; z-index: 10001; cursor: pointer;">
+            </div>
+        </div>
+    </div> -->
     
     <div id="placesNav">
         <button class="toggleNav"></button>
@@ -33,7 +87,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
 
-    <script src="js/mvvm-1.js"></script>
+    <script src="js/mvvm-2.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHEUetOP4G8rQ_g8stsp60DFafHyfb_ms&v=3&callback=Initialize"></script>
 </body>
 </html>

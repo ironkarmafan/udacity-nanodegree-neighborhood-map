@@ -155,10 +155,71 @@ function viewModel() {
 	}
 
 	function formatInfoWindow(p){
-		var s = "<div class=\"infoWindow\">" + 
-				"<span class=\"name\">" + p.name + "</span>" +
+		// returns number of stars to display
+		var stars = displayStars(p);
+		var address = displayAddress(p);
+		
+		
+		var s = "<div class=\"infoWindowContent\">" + 
+				"<a class=\"name\" title=\"" + p.name + "\" href=\"" + p.url + "\">" + p.name + "</a>" +
+				"<p><div class=\"yelpStars " + stars + "\"></div>" +
+				"<span class=\"reviewCount\">Reviews: " + p.review_count + "</span></p>" +
+				"<p><span class=\"price\">" + p.price + "</span> · " +
+				"<span class=\"category\">" + p.categories[0].title + "</span></p>" +
+				address +
+				"<a class=\"name\" title=\"" + p.name + "\" href=\"tel:" + p.phone + "\">" + p.display_phone + "</a>" +
 				"</div>";
 		return s;
+	}
+
+	function displayStars(p) {
+		var rs = p.rating.toString();
+		switch(rs) {
+			case "1":
+				return "oneStar";
+				break;
+			case "1.5":
+				return "oneHalfStar";
+				break;
+			case "2":
+				return "twoStars";
+				break;
+			case "2.5":
+				return "twoHalfStars";
+				break;
+			case "3":
+				return "threeStars";
+				break;
+			case "3.5":
+				return "threeHalfStars";
+				break;
+			case "4":
+				return "fourStars";
+				break;
+			case "4.5":
+				return "fourHalfStars";
+				break;
+			case "5":
+				return "fiveStars";
+				break;
+			default: 
+				return "";
+		}
+	}
+
+	function displayAddress(p) {
+		if(p.location.display_address) {
+			var s = "<p>";
+			
+			(p.location.display_address).forEach(function(a){
+				s += "<span class=\"address\">" + a + "</span>"
+			});
+			s += "</p>";
+				return s;
+			}
+		else {
+			console.log("no display addresses available");
+		}
 	}
 	
 	// shows places based on both category and name (if name exists)

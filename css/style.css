@@ -2,6 +2,8 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
 }
 
 #map {
@@ -67,12 +69,9 @@ html, body {
 }
 
 
-.infoWindow {
-    position: absolute;
-    right: 10px;
-    top: 50px;
-    padding: 20px;
+.infoWindowContent {
     width: 200px;
+    font-size: 16px;
     box-sizing: border-box;
     background-color: white;
 }
@@ -80,10 +79,10 @@ html, body {
 .yelpStars {
     width: 132px;
     height: 24px;
-    margin: 0 auto;
     background-image: url(../img/yelp-stars.png);
 }
 
+/* TODO: update to include half stars */
 .yelpStars.oneStar {
     background-position-y: 120px;
 }

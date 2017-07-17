@@ -695,6 +695,7 @@ function filterPlaces(ps) {
 			case "stonehouse-coffee-and-bar-austin-2":
 			case "hey-cupcake-austin-3":
 			case "gourdoughs-austin":
+			case "bouldin-creek-cafe-austin":
 				break;
 			// adds 'ice cream' category in place of dessert category
 			case "bananarchy-austin":
@@ -795,16 +796,18 @@ function viewModel() {
 		// returns number of stars to display
 		var stars = displayStars(p);
 		//var address = displayAddress(p);
-		
+		var address = "<p><span class=\"address\">123 Fake Street</span><span class=\"address\">Austin, TX 78704</span></p>";
+		var phone = "<a class=\"phone\" href=\"tel:#\">(123) 456-7890</a>"
 		
 		var s = "<div class=\"infoWindowContent\">" + 
 				"<a class=\"name\" title=\"" + p.name + "\" href=\"" + p.url + "\">" + p.name + "</a>" +
 				"<p><div class=\"yelpStars " + stars + "\"></div>" +
-				"<span class=\"reviewCount\"> Reviews: " + p.review_count + "</span></p>" +
-				"<p><span class=\"price\">" + p.price + "</span> · " + /*
+				"<span class=\"reviewCount\"> Reviews: 1000</span></p>" +
+				"<p><span class=\"price\">" + p.price + "</span> · " +
 				"<span class=\"category\">" + p.categories[0].title + "</span></p>" +
 				address +
-				"<a class=\"name\" title=\"" + p.name + "\" href=\"tel:" + p.phone + "\">" + p.display_phone + "</a>" + */
+				/*"<a class=\"name\" title=\"" + p.name + "\" href=\"tel:" + p.phone + "\">" + p.display_phone + "</a>" + */
+				phone +
 				"</div>";
 		return s;
 	}

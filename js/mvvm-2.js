@@ -164,7 +164,6 @@ function viewModel() {
 		var stars = displayStars(p);
 		var address = displayAddress(p);
 		
-		
 		var s = "<div class=\"infoWindowContent\">" + 
 				"<a class=\"name\" title=\"" + p.name + "\" href=\"" + p.url + "\">" + p.name + "</a>" +
 				"<p><div class=\"yelpStars " + stars + "\"></div>" +
@@ -172,7 +171,7 @@ function viewModel() {
 				"<p><span class=\"price\">" + p.price + "</span> · " +
 				"<span class=\"category\">" + p.categories[0].title + "</span></p>" +
 				address +
-				"<a class=\"name\" title=\"" + p.name + "\" href=\"tel:" + p.phone + "\">" + p.display_phone + "</a>" +
+				"<a class=\"phone\" title=\"Call " + p.display_phone + "\" href=\"tel:" + p.phone + "\">" + p.display_phone + "</a>" +
 				"</div>";
 		return s;
 	}

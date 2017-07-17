@@ -107,19 +107,39 @@ html, body {
 
 .infoWindowContent {
     width: 200px;
-    font-size: 16px;
+    font-size: 12px;
+    line-height: 1.25em;
     box-sizing: border-box;
     background-color: white;
 }
 
-.yelpStars {
+.infoWindowContent .name {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.33em;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.infoWindowContent p {
+    margin-bottom: 5px;
+}
+
+.infoWindowContent .address {
+    display: block;
+}
+
+.infoWindowContent .phone {
+    text-decoration: none;
+}
+
+.infoWindowContent .yelpStars {
     display: inline-block;
     width: 102px;
     height: 18px;
     background-image: url(../img/yelp-stars.png);
 }
 
-/* TODO: update to include half stars */
 .yelpStars.oneStar {
     background-position-y: 162px;
 }

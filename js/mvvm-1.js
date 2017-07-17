@@ -653,6 +653,7 @@ function Initialize() {
 		// responsive nav
 		$(".toggleNav").on("click", function(){
 			$("#placesNav").toggleClass("show");
+			$(".toggleNav").toggleClass("shift");
 		});
 
 		filteredPlaces = filterPlaces(initialPlaces);
@@ -667,6 +668,7 @@ function filterPlaces(ps) {
     var fs = [];
     ps.forEach(function(f, i){
         switch(f.id) {
+			// filters out these places
 			case "burro-cheese-kitchen-austin":
 			case "shake-shack-austin":
             case "toms-austin-5":
@@ -691,7 +693,18 @@ function filterPlaces(ps) {
 			case "caffé-medici-austin-5":
 			case "mañana-coffee-juice-and-bakeshop-austin":
 			case "stonehouse-coffee-and-bar-austin-2":
-                break;
+			case "hey-cupcake-austin-3":
+			case "gourdoughs-austin":
+				break;
+			// adds 'ice cream' category in place of dessert category
+			case "bananarchy-austin":
+			case "holy-cacao-austin":
+				(f.categories).forEach(function(c){
+					if(c.alias === "desserts") {
+						c.alias = "icecream";
+						c.title = "Ice Cream & Frozen Yogurt";
+					}
+				});
 		default:
 		    // if coordinates are not NULL add
             if(typeof f.coordinates.latitude === 'number' && typeof f.coordinates.longitude === 'number') {
@@ -749,6 +762,7 @@ function viewModel() {
     filteredPlaces.forEach(function(p, i){
 		self.places.push(p);
 	});
+	console.log(this.places());
 
 	// initialize place info windows
 	self.places().forEach(function(p){
@@ -780,17 +794,17 @@ function viewModel() {
 	function formatInfoWindow(p){
 		// returns number of stars to display
 		var stars = displayStars(p);
-		var address = displayAddress(p);
+		//var address = displayAddress(p);
 		
 		
 		var s = "<div class=\"infoWindowContent\">" + 
 				"<a class=\"name\" title=\"" + p.name + "\" href=\"" + p.url + "\">" + p.name + "</a>" +
 				"<p><div class=\"yelpStars " + stars + "\"></div>" +
 				"<span class=\"reviewCount\"> Reviews: " + p.review_count + "</span></p>" +
-				"<p><span class=\"price\">" + p.price + "</span> · " +
+				"<p><span class=\"price\">" + p.price + "</span> · " + /*
 				"<span class=\"category\">" + p.categories[0].title + "</span></p>" +
 				address +
-				"<a class=\"name\" title=\"" + p.name + "\" href=\"tel:" + p.phone + "\">" + p.display_phone + "</a>" +
+				"<a class=\"name\" title=\"" + p.name + "\" href=\"tel:" + p.phone + "\">" + p.display_phone + "</a>" + */
 				"</div>";
 		return s;
 	}

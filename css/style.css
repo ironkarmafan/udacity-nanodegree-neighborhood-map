@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 html, body { 
     height: 100%;
     margin: 0;
@@ -11,7 +16,6 @@ html, body {
     right: 0;
     width: 100%;
     height: 100%;
-    overflow: scroll;
 }
 @media screen and (min-width: 769px) {
     #map {
@@ -27,21 +31,35 @@ html, body {
     top: 0;
     left: 0;
 }
+
 #placesNav {
     position: absolute;
-    top: 0;
-    left: -300px;
-    width: 300px;
+    width: 100%;
     height: 100%;
+    top: 100%;
+    left: 0;
     color: white;
     background-color: black;
     z-index: 3;
-    transition: .4s left ease-out;
+    transition: .4s all ease-out;
+    overflow: scroll;
 }
+
+    #placesNav.show {
+        top: 0;
+    }
+
+@media screen and (min-width: 371px) {
+    #placesNav {
+        width: 300px;
+        top: 0;
+        left: -300px;
+    }
 
     #placesNav.show {
         left: 0;
     }
+}
 
 @media screen and (min-width: 769px) {
     #placesNav,
@@ -55,11 +73,29 @@ html, body {
     position: absolute;
     width: 50px;
     height: 50px;
-    top: 0;
-    right: -50px;
+    left: 0;
+    top: calc(100% - 50px);
     border: 0 none;
-    background: red;
     outline: 0;
+    background: red;
+    z-index: 5;
+    transition: .4s all ease-out;
+}
+
+    .toggleNav.shift {
+        top: 0;
+    }
+
+@media screen and (min-width: 371px) {
+    .toggleNav {
+        top: 0;
+        left: 0;
+    }
+
+        .toggleNav.shift {
+            top: 0;
+            left: 300px;
+        }
 }
 
 @media screen and (min-width: 769px) {

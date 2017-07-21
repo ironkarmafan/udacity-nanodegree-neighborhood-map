@@ -316,6 +316,7 @@ header {
 }
 
 .infoWindowContent a:link,
+.infoWindowContent a:visited,
 .infoWindowContent a:active {
     color: #b55a0f;
     transition: .2s color ease-out;

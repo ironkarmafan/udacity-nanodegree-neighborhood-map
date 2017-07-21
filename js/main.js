@@ -322,18 +322,18 @@ function viewModel() {
 	}
 
 	function displayAddress(p) {
+		var s = "";
 		if(p.location.display_address) {
-			var s = "<p>";
+			s = "<p>";
 			
 			(p.location.display_address).forEach(function(a){
-				s += "<span class=\"address\">" + a + "</span>"
+				s += "<span class=\"address\">" + a + "</span>";
 			});
+
 			s += "</p>";
-				return s;
-			}
-		else {
+			return s;
 		}
-	};
+	}
 	
 	// shows places based on both category and name (if name exists)
     this.placesToShow = ko.computed(function() {
@@ -395,7 +395,7 @@ function viewModel() {
 			}
 		});
 		return match;
-	};
+	}
 
 	// Return if partial input string matches given name (or title)
 	function containsMatch(s) {
@@ -404,7 +404,7 @@ function viewModel() {
 		if((ls).search(li) > -1) {
 			return true;
 		}
-	};
+	}
  
     // Show/hide callbacks for the places list
     this.showPlace = function(p) {

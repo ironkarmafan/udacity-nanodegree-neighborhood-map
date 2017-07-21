@@ -14,6 +14,7 @@ body {
 
 header {
     position: fixed;
+    box-sizing: border-box;
     width: calc(100% - 45px);
     height: 45px;
     top: calc(100% - 45px);
@@ -23,9 +24,12 @@ header {
     font-size: 7vw;
     line-height: 45px;
     z-index: 5;
-    background-color: blue;
+    border-bottom: 1px solid #b55a0f;
+    background-color: #ff80ba;
     color: white;
     transition: .4s all ease-out;
+    cursor: pointer;
+    
 }
 
     header.shift {

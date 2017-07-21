@@ -826,11 +826,13 @@ function initMap() {
 }
 
 function initMarkers() {
+	var markerIcon = "img/marker.png";
 	// create markers and assign to associated filtered place
 	filteredPlaces.forEach(function(f){
 		var m = new google.maps.Marker({
             position: {lat: f.coordinates.latitude, lng: f.coordinates.longitude},
-            map: map,
+			map: map,
+			icon: markerIcon,
             animation: google.maps.Animation.DROP
 		});
 		f.marker = m;

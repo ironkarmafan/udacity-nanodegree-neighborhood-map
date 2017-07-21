@@ -809,7 +809,7 @@ function initMap() {
 			{
 				featureType: 'water',
 				elementType: 'geometry',
-				stylers: [{color: '#ffbdd3'}]
+				stylers: [{color: '#ff80ba'}]
 			},
 			{
 				featureType: 'water',

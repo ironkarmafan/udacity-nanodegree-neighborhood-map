@@ -22,11 +22,13 @@
             <a href="#"><label><input type='radio' value='coffee' data-bind='checked: typeToShow' />Hot Drinks</label></a>
             <a href="#"><label><input type='radio' value='icecream' data-bind='checked: typeToShow' />Cool  Treats</label></a>
         </div>
-        <ul data-bind='template: { foreach: placesToShow,
-                                    beforeRemove: hidePlace,
-                                    afterAdd: showPlace }'>
-            <li data-bind='attr: { "class": "place " }, text: name, click: $parent.markPlace'> </li>
-        </ul>
+        <div id="placesList">
+            <ul data-bind='template: { foreach: placesToShow,
+                                        beforeRemove: hidePlace,
+                                        afterAdd: showPlace }'>
+                <li data-bind='attr: { "class": "place " }, text: name, click: $parent.markPlace'> </li>
+            </ul>
+        </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>

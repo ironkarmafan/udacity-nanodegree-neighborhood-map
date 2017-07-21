@@ -163,7 +163,13 @@ header {
     background-size: 40px;
 }
 
-#placesNav li {
+#placesList {
+    height: 100vh;
+    height: calc(100vh - 180px);
+    overflow: scroll;
+}
+
+#placesList li {
     margin-bottom: 5px;
     padding: 5px 0;
     list-style: none;
@@ -171,10 +177,15 @@ header {
     cursor: pointer;
 }
 
+#placesList li:first-child {
+    border-top: 0 none;
+}
+
 #filterBy {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    border-bottom: 1px solid #fdf8e2;
 }
 
 #filterBy input[type="radio"]{

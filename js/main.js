@@ -86,16 +86,20 @@ function filterPlaces(ps) {
 			case "gourdoughs-austin":
 			case "bouldin-creek-cafe-austin":
 				break;
-			// adds 'ice cream' category in place of dessert category
-			case "bananarchy-austin":
-			case "holy-cacao-austin":
-				(f.categories).forEach(function(c){
-					if(c.alias === "desserts") {
-						c.alias = "icecream";
-						c.title = "Ice Cream & Frozen Yogurt";
-					}
-				});
 		default:
+			// adds 'ice cream' category in place of dessert category
+			switch(f.id) {
+				case "bananarchy-austin":
+				case "holy-cacao-austin":
+					(f.categories).forEach(function(c){
+						if(c.alias === "desserts") {
+							c.alias = "icecream";
+							c.title = "Ice Cream & Frozen Yogurt";
+						}
+					});
+					break;
+				default:
+			}
 		    // if coordinates are not NULL add (sometimes Yelp results return null coordinates)
             if(typeof f.coordinates.latitude === 'number' && typeof f.coordinates.longitude === 'number') {
                 fs.push(f);
@@ -262,7 +266,7 @@ function viewModel() {
 				h.marker.setAnimation(null);
 			}
 		});
-	}
+	};
 
 	function formatInfoWindow(p){
 		// returns number of stars to display
@@ -283,37 +287,38 @@ function viewModel() {
 
 	function displayStars(p) {
 		var rs = p.rating.toString();
+		var c = "";
 		switch(rs) {
 			case "1":
-				return "oneStar";
+				c = "oneStar";
 				break;
 			case "1.5":
-				return "oneHalfStar";
+				c = "oneHalfStar";
 				break;
 			case "2":
-				return "twoStars";
+				c = "twoStars";
 				break;
 			case "2.5":
-				return "twoHalfStars";
+				c = "twoHalfStars";
 				break;
 			case "3":
-				return "threeStars";
+				c = "threeStars";
 				break;
 			case "3.5":
-				return "threeHalfStars";
+				c = "threeHalfStars";
 				break;
 			case "4":
-				return "fourStars";
+				c = "fourStars";
 				break;
 			case "4.5":
-				return "fourHalfStars";
+				c = "fourHalfStars";
 				break;
 			case "5":
-				return "fiveStars";
+				c = "fiveStars";
 				break;
-			default: 
-				return "";
+			default:
 		}
+		return c;
 	}
 
 	function displayAddress(p) {
@@ -328,7 +333,7 @@ function viewModel() {
 			}
 		else {
 		}
-	}
+	};
 	
 	// shows places based on both category and name (if name exists)
     this.placesToShow = ko.computed(function() {
@@ -360,7 +365,7 @@ function viewModel() {
 				}
 			});
 			// matchCat should always be true before checking for matched input
-			if(matchCat == true) {
+			if(matchCat === true) {
 				if(self.placesInput() !== defaultInput) {
 					if( containsMatch(p.name) || categoryMatch(p.categories) ) {
 						p.marker.setMap(map);
@@ -390,7 +395,7 @@ function viewModel() {
 			}
 		});
 		return match;
-	}
+	};
 
 	// Return if partial input string matches given name (or title)
 	function containsMatch(s) {
@@ -399,13 +404,13 @@ function viewModel() {
 		if((ls).search(li) > -1) {
 			return true;
 		}
-	}
+	};
  
     // Show/hide callbacks for the places list
     this.showPlace = function(p) {
-		$(p).show()
-	}
+		$(p).show();
+	};
     this.hidePlace = function(p) {
-		$(p).hide()
-	}
+		$(p).hide();
+	};
 }

@@ -242,7 +242,6 @@ function viewModel() {
 
 	// animate marker and display its info window
     this.markPlace = function(p) {
-		console.log(p.id);
 		// hightlight place in places list
 		$("#placesList li").removeClass("selected");
 		$("#placesList li." + p.id).addClass("selected");
@@ -328,7 +327,6 @@ function viewModel() {
 				return s;
 			}
 		else {
-			console.log("no display addresses available");
 		}
 	}
 	

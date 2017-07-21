@@ -1,7 +1,7 @@
 var initialPlaces;
 var filteredPlaces;
 var map;
-var iw; // info window
+var iw = null; // info window
 
 // get initial places from Yelp search reesults first, then initialize maps, markers, and view-model
 function Initialize() {
@@ -30,6 +30,18 @@ function Initialize() {
                 price : "1,2"
             },
         }).done(function(response){
+			// responsive nav
+			$(".toggleNav").on("click", function(){
+				$("#placesNav").toggleClass("show");
+				$(".toggleNav").toggleClass("shift");
+				$("header").toggleClass("shift");
+			});
+			// responsive header
+			$("header").on("click", function(){
+				$("#placesNav").toggleClass("show");
+				$(".toggleNav").toggleClass("shift");
+				$("header").toggleClass("shift");
+			});
             initialPlaces = response.businesses;
             filteredPlaces = filterPlaces(initialPlaces);
             initMap();
@@ -38,9 +50,12 @@ function Initialize() {
             console.log(filteredPlaces);
             
         }).fail(function(error, textStatus, errorThrown){
+			// TODO: add error view
             console.log("Error occured while searching.");
             console.dir(textStatus, errorThrown);
-        });
+        }).always(function(){
+
+		});
     });
 }
 
@@ -49,6 +64,7 @@ function filterPlaces(ps) {
     var fs = [];
     ps.forEach(function(f, i){
         switch(f.id) {
+			// filters out these places
 			case "burro-cheese-kitchen-austin":
 			case "shake-shack-austin":
             case "toms-austin-5":
@@ -73,7 +89,19 @@ function filterPlaces(ps) {
 			case "caffé-medici-austin-5":
 			case "mañana-coffee-juice-and-bakeshop-austin":
 			case "stonehouse-coffee-and-bar-austin-2":
-                break;
+			case "hey-cupcake-austin-3":
+			case "gourdoughs-austin":
+			case "bouldin-creek-cafe-austin":
+				break;
+			// adds 'ice cream' category in place of dessert category
+			case "bananarchy-austin":
+			case "holy-cacao-austin":
+				(f.categories).forEach(function(c){
+					if(c.alias === "desserts") {
+						c.alias = "icecream";
+						c.title = "Ice Cream & Frozen Yogurt";
+					}
+				});
 		default:
 		    // if coordinates are not NULL add
             if(typeof f.coordinates.latitude === 'number' && typeof f.coordinates.longitude === 'number') {
@@ -91,29 +119,109 @@ function initMap() {
         zoom: 15,
 		disableDefaultUI: true,
 		styles: [
-          {
-            featureType: 'poi',
-            stylers: [{visibility: 'off'}]
-		  },
-		  {
-            featureType: 'poi.park',
-            stylers: [{visibility: 'on'}]
-          },
-          {
-            featureType: 'transit',
-            elementType: 'labels.icon',
-            stylers: [{visibility: 'off'}]
-          }
+			{
+			featureType: 'poi',
+			stylers: [{visibility: 'off'}]
+			},
+			{
+			featureType: 'poi.park',
+			stylers: [{visibility: 'on'}]
+			},
+			{
+			featureType: 'transit',
+			elementType: 'labels.icon',
+			stylers: [{visibility: 'off'}]
+			},
+			{elementType: 'geometry', stylers: [{color: '#fdf8e2'}]},
+			{elementType: 'labels.text.stroke', stylers: [{color: '#ffffff'}]},
+			{elementType: 'labels.text.fill', stylers: [{color: '#be6e20'}]},
+			{
+				featureType: 'administrative.locality',
+				elementType: 'labels.text.fill',
+				stylers: [{color: '#d59563'}]
+			},
+			{
+				featureType: 'poi',
+				elementType: 'labels.text.fill',
+				stylers: [{color: '#ff80ba'}]
+			},
+			{
+				featureType: 'poi.park',
+				elementType: 'geometry',
+				stylers: [{color: '#ffbdd3'}]
+			},
+			{
+				featureType: 'poi.park',
+				elementType: 'labels.text.fill',
+				stylers: [{color: '#ff80ba'}]
+			},
+			{
+				featureType: 'road',
+				elementType: 'geometry',
+				stylers: [{color: '#be6e20'}]
+			},
+			{
+				featureType: 'road',
+				elementType: 'geometry.stroke',
+				stylers: [{color: '#be6e20'}]
+			},
+			{
+				featureType: 'road',
+				elementType: 'labels.text.fill',
+				stylers: [{color: '#be6e20'}]
+			},
+			{
+				featureType: 'road.highway',
+				elementType: 'geometry',
+				stylers: [{color: '#b55a0f'}]
+			},
+			{
+				featureType: 'road.highway',
+				elementType: 'geometry.stroke',
+				stylers: [{color: '#b55a0f'}]
+			},
+			{
+				featureType: 'road.highway',
+				elementType: 'labels.text.fill',
+				stylers: [{color: '#f3d19c'}]
+			},
+			{
+				featureType: 'transit',
+				elementType: 'geometry',
+				stylers: [{color: '#ffbdd3'}]
+			},
+			{
+				featureType: 'transit.station',
+				elementType: 'labels.text.fill',
+				stylers: [{color: '#d59563'}]
+			},
+			{
+				featureType: 'water',
+				elementType: 'geometry',
+				stylers: [{color: '#ff80ba'}]
+			},
+			{
+				featureType: 'water',
+				elementType: 'labels.text.fill',
+				stylers: [{color: '#ffffff'}]
+			},
+			{
+				featureType: 'water',
+				elementType: 'labels.text.stroke',
+				stylers: [{color: '#17263c'}]
+			}
         ]
 	});
 }
 
 function initMarkers() {
+	var markerIcon = "img/marker.png";
 	// create markers and assign to associated filtered place
 	filteredPlaces.forEach(function(f){
 		var m = new google.maps.Marker({
             position: {lat: f.coordinates.latitude, lng: f.coordinates.longitude},
-            map: map,
+			map: map,
+			icon: markerIcon,
             animation: google.maps.Animation.DROP
 		});
 		f.marker = m;
@@ -141,6 +249,11 @@ function viewModel() {
 
 	// animate marker and display its info window
     this.markPlace = function(p) {
+		console.log(p.id);
+		// hightlight place in places list
+		$("#placesList li").removeClass("selected");
+		$("#placesList li." + p.id).addClass("selected");
+
         p.marker.setMap(map);
 
         // open info window

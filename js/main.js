@@ -96,7 +96,7 @@ function filterPlaces(ps) {
 					}
 				});
 		default:
-		    // if coordinates are not NULL add
+		    // if coordinates are not NULL add (sometimes Yelp results return null coordinates)
             if(typeof f.coordinates.latitude === 'number' && typeof f.coordinates.longitude === 'number') {
                 fs.push(f);
             }

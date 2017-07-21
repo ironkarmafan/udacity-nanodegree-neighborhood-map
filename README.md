@@ -5,7 +5,7 @@ Neighborhood Map project for Udacity Nanodegree. Creates a map (if the user choo
 Open index.html to open app.
 
 ## Usage
-After maps and places load, either click a **Marker** or click a place from the places list to highlight a specific place. (The map should center on the place and display an **Info Window**).
+After maps and places load, either click a **Marker** or click a place from the places list to highlight a specific place. (The map should center on the place and display an **Info Window**, and the list should highlight the place clicked). Remember, list is scrollable, so if you don't see a highlighted place, scroll down the list to see it.
 
 Places can be searched for in the provided search bar. The search bar searches for either category (any category associated with the place not just the displayed category from the **Info Window**) or the name itself. Searches are conducted in real time without pressing a **Submit Button** and are dynamically populated in the places list.
 

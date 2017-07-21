@@ -654,6 +654,7 @@ function Initialize() {
 		$(".toggleNav").on("click", function(){
 			$("#placesNav").toggleClass("show");
 			$(".toggleNav").toggleClass("shift");
+			$("header").toggleClass("shift");
 		});
 
 		filteredPlaces = filterPlaces(initialPlaces);

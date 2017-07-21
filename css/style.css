@@ -9,19 +9,71 @@ body {
     padding: 0;
     font-family: 'Raleway', sans-serif;
     font-size: 16px;
-    background: #fdf8e2 url(../img/loading-bg.svg) no-repeat 50% 50%;
+    background: #fdf8e2;
     background-size: 200px;
     overflow: hidden;
 }
 
-@media screen and (min-width: 769px) {
-    body {
-        background-size: 200px;
-        background-position: calc(50% + 150px) 50%;
+#load {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    box-sizing: border-box;
+    width: 300px;
+    height: 400px;
+    margin: -200px 0 0 -150px;
+    padding-top: 290px;
+    background-position: bottom 120px left 70px;
+    background-repeat: no-repeat;
+    background-size: 200px;
+}
+
+@media screen and (min-width: 371px) {
+    #load {
+        top: 50%;
     }
 }
 
+@media screen and (min-width: 769px) {
+    #load {
+        left: calc(50% + 150px);
+    }
+}
+
+.loadBg {
+    background-image: url(../img/loading-bg.svg);
+}
+
+.loadBg span {
+    display: block;
+    font-family: 'Lobster', cursive;
+    color: #b55a0f;
+    text-align: center;
+    font-size: 3.5rem;
+    animation: fade 2.5s infinite;
+}
+
+@keyframes fade {
+    0%, 50%, 100% {opacity: 1;}
+    25%, 75% {opacity: .5;}
+}
+
+.errorBg {
+    background-image: url(../img/error-bg.svg);
+}
+
+.errorBg span {
+    display: block;
+    font-family: 'Lobster', cursive;
+    color: #c1272d;
+    text-align: center;
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
 header {
+    display: block;
+    font-family: 'Lobster', cursive;
     position: fixed;
     box-sizing: border-box;
     width: calc(100% - 45px);

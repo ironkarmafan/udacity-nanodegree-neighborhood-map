@@ -170,8 +170,7 @@ header {
 }
 
 #placesList li {
-    margin-bottom: 5px;
-    padding: 5px 0;
+    padding: 5px;
     list-style: none;
     border-top: 1px dotted #ffbdd3;
     cursor: pointer;
@@ -179,6 +178,11 @@ header {
 
 #placesList li:first-child {
     border-top: 0 none;
+}
+
+#placesList li.selected {
+    color: #c1272d;
+    background-color: #fdf8e2;
 }
 
 #filterBy {

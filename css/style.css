@@ -106,9 +106,9 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    padding: 60px 0 0 0;
-    color: white;
-    background-color: black;
+    padding: 60px 15px 15px 15px;
+    color: #fdf8e2;
+    background-color: #a61726;
     z-index: 4;
     transition: .4s all ease-out;
     overflow: scroll;
@@ -121,7 +121,7 @@ header {
 @media screen and (min-width: 371px) {
     #placesNav {
         width: 300px;
-        padding: 15px 0 0 0;
+        padding: 15px;
         top: 0;
         left: -300px;
     }
@@ -139,8 +139,57 @@ header {
     }
 }
 
-#placesNav input[type="radio"]{
+#placesNav input[type="text"] {
+    box-sizing: border-box;
+    width: 100%;
+    height: 45px;
+    margin-bottom: 5px;
+    padding: 0 50px 0 5px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    color: #231002;
+    border: 0 none;
+    background: url(../img/magnifying-glass.svg) #ffbdd3 no-repeat;
+    background-position: bottom 2px right 5px;
+    background-size: 40px;
+}
+
+#placesNav li {
+    margin-bottom: 5px;
+    padding: 5px 0;
+    list-style: none;
+    border-top: 1px dotted #ffbdd3;
+    cursor: pointer;
+}
+
+#filterBy {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#filterBy input[type="radio"]{
     visibility: hidden;
+    width: 1px;
+    height: 1px;
+}
+
+#filterBy a {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #fdf8e2;
+    transition: .2s all ease-out;
+    cursor: pointer;
+}
+
+#filterBy a:hover {
+    color: #c1272d;
+    background-color: #fdf8e2;
+}
+
+#filterBy label {
+    cursor: pointer;
 }
 
 .toggleNav {
@@ -151,7 +200,7 @@ header {
     top: calc(100% - 45px);
     border: 0 none;
     outline: 0;
-    background: red;
+    background: #c1272d;
     z-index: 5;
     transition: .4s all ease-out;
 }
@@ -181,10 +230,22 @@ header {
 
 .infoWindowContent {
     width: 200px;
+    font-family: 'Raleway', sans-serif;
     font-size: 12px;
     line-height: 1.25em;
     box-sizing: border-box;
     background-color: white;
+}
+
+.infoWindowContent a:link,
+.infoWindowContent a:active {
+    color: #b55a0f;
+    transition: .2s color ease-out;
+}
+
+.infoWindowContent a:hover,
+.infoWindowContent a:focus {
+    color: #dd8c4e;
 }
 
 .infoWindowContent .name {

@@ -18,12 +18,9 @@
     <div id="placesNav">
         <input type="text" data-bind="textInput: placesInput" />
         <div id="filterBy">
-            Show:
-            <ul>
-                <li><label><input type='radio' value='all' data-bind='checked: typeToShow' />All</label></li>
-                <li><label><input type='radio' value='coffee' data-bind='checked: typeToShow' />Hot Drinks</label></li>
-                <li><label><input type='radio' value='icecream' data-bind='checked: typeToShow' />Cool  Treats</label></li>
-            </ul>
+            <a href="#"><label><input type='radio' value='all' data-bind='checked: typeToShow' />All</label></a>
+            <a href="#"><label><input type='radio' value='coffee' data-bind='checked: typeToShow' />Hot Drinks</label></a>
+            <a href="#"><label><input type='radio' value='icecream' data-bind='checked: typeToShow' />Cool  Treats</label></a>
         </div>
         <ul data-bind='template: { foreach: placesToShow,
                                     beforeRemove: hidePlace,

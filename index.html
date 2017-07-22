@@ -9,7 +9,7 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-    <header>
+    <header data-bind="css: {shift: togglePlacesList}, click: clickNav">
         Hot Drinks, Cool Treats
     </header>
     <!-- TODO add more robust load/map error load screen, first manually add/style screens 
@@ -17,8 +17,8 @@
     <div id="load" class="loadBg"><span>. . Loading . .</span></div>
     <div id="map"></div>
     
-    <button class="toggleNav"></button>
-    <div id="placesNav">
+    <button class="toggleNav" data-bind="css: {shift: togglePlacesList}, click: clickNav"></button>
+    <div id="placesNav" data-bind="css: {show: togglePlacesList}">
         <input type="text" data-bind="textInput: placesInput">
         <select data-bind="options: categoriesList,
                            optionsCaption: 'Hot Drinks, or Cool Treats?',
@@ -33,6 +33,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
 
     <script src="js/mvvm-3.js"></script>
-    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHEUetOP4G8rQ_g8stsp60DFafHyfb_ms&v=3&callback=initialize" onerror="noMaps()"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHEUetOP4G8rQ_g8stsp60DFafHyfb_ms&v=3&callback=initMap" onerror="noMapsError()"></script>
 </body>
 </html>

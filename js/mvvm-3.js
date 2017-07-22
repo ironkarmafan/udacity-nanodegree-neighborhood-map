@@ -3,9 +3,7 @@ var filteredPlaces;
 var map;
 var iw = null; // info window
 
-function noMapsError() {
-	console.log("couldn't load map");
-}
+initialize();
 
 // get initial places from Yelp search reesults first, then initialize maps, markers, and view-model
 function initialize() {
@@ -14,19 +12,6 @@ function initialize() {
         var cors_anywhere_url = 'https://cors-anywhere.herokuapp.com/'; // prevents CORS error
 		var yt = "far-TFsqEITUllAyGc0dEMBm3BZhwktFiUmtXCuAsSuC9hU_EkKi9dx73ixbY6U9X-DNgloo53hOYT5x2pRXbG3nIBEy51Gxyw8N2kuUTWOy5PHGtfqKioIWeFVkWXYx"; // Yelp token
 		var yelp_search_url = cors_anywhere_url + "https://api.yelp.com/v3/businesses/search";
-
-		// responsive nav
-		$(".toggleNav").on("click", function(){
-			$("#placesNav").toggleClass("show");
-			$(".toggleNav").toggleClass("shift");
-			$("header").toggleClass("shift");
-		});
-		// responsive header
-		$("header").on("click", function(){
-			$("#placesNav").toggleClass("show");
-			$(".toggleNav").toggleClass("shift");
-			$("header").toggleClass("shift");
-		});
 
         $.ajax({
             url: yelp_search_url,
@@ -44,14 +29,13 @@ function initialize() {
         }).done(function(response){
             initialPlaces = response.businesses;
             filteredPlaces = filterPlaces(initialPlaces);
-            initMap();
             initMarkers();
-            ko.applyBindings(new ViewModel());
-			$("#load").hide();
             
         }).fail(function(error, textStatus, errorThrown){
 			$("#load").removeClass("loadBg").addClass("errorBg");
 			$(".errorBg span").html("Could not load map or places");
+        }).always(function(){
+            ko.applyBindings(new ViewModel());
         });
     });
 }
@@ -229,14 +213,28 @@ function initMarkers() {
 	});
 }
 
+function noMapsError() {
+    $("#load").removeClass("loadBg").addClass("errorBg");
+	$(".errorBg span").html("Could not load map or places");
+}
+
 function ViewModel() {
     var self = this;
-	this.placesInput = ko.observable("");
-	var defaultInput = "";
-    this.typeToShow = ko.observable("all");
+    
+    this.placesInput = ko.observable("");
+    var defaultInput = "";
+    
     this.places = ko.observableArray([]);
+
     this.categoriesList = ko.observableArray(["Hot Drinks", "Cool Treats"]);
     this.selectedCategory = ko.observable();
+
+    this.togglePlacesList = ko.observable(false);
+
+    // toggle UI
+    this.clickNav = function() {
+        return(self.togglePlacesList(!self.togglePlacesList()));
+    };
 
 	// populate places
     filteredPlaces.forEach(function(p, i){

@@ -4,25 +4,12 @@ var map;
 var iw = null; // info window
 
 // get initial places from Yelp search reesults first, then initialize maps, markers, and view-model
-function Initialize() {
+function initialize() {
     $(document).ready(function(){
 
         var cors_anywhere_url = 'https://cors-anywhere.herokuapp.com/'; // prevents CORS error
-		var yt = "far-TFsqEITUllAyGc0dEMBm3BZhwktFiUmtXCuAsSuC9hU_EkKi9dx73ixbY6U9X-DNgloo53hOYT5x2pRXbG3nIBEy51Gxyw8N2kuUTWOy5PHGtfqKioIWeFVkWXYx"; // Yelp token
+        var yt = "far-TFsqEITUllAyGc0dEMBm3BZhwktFiUmtXCuAsSuC9hU_EkKi9dx73ixbY6U9X-DNgloo53hOYT5x2pRXbG3nIBEy51Gxyw8N2kuUTWOy5PHGtfqKioIWeFVkWXYx"; // Yelp token
 		var yelp_search_url = cors_anywhere_url + "https://api.yelp.com/v3/businesses/search";
-
-		// responsive nav
-		$(".toggleNav").on("click", function(){
-			$("#placesNav").toggleClass("show");
-			$(".toggleNav").toggleClass("shift");
-			$("header").toggleClass("shift");
-		});
-		// responsive header
-		$("header").on("click", function(){
-			$("#placesNav").toggleClass("show");
-			$(".toggleNav").toggleClass("shift");
-			$("header").toggleClass("shift");
-		});
 
         $.ajax({
             url: yelp_search_url,
@@ -42,12 +29,11 @@ function Initialize() {
             filteredPlaces = filterPlaces(initialPlaces);
             initMap();
             initMarkers();
-            ko.applyBindings(new viewModel());
-			$("#load").hide();
             
         }).fail(function(error, textStatus, errorThrown){
-			$("#load").removeClass("loadBg").addClass("errorBg");
-			$(".errorBg span").html("Could not load map or places");
+            showError();
+        }).always(function(){
+            ko.applyBindings(new ViewModel());
         });
     });
 }
@@ -225,12 +211,31 @@ function initMarkers() {
 	});
 }
 
-function viewModel() {
+function showError() {
+    $("#load").removeClass("loadBg").addClass("errorBg");
+	$(".errorBg span").html("Could not load map or places");
+}
+
+function ViewModel() {
     var self = this;
-	this.placesInput = ko.observable("");
-	var defaultInput = "";
-    this.typeToShow = ko.observable("all");
-	this.places = ko.observableArray([]);
+    
+    this.placesInput = ko.observable("");
+    var defaultInput = "";
+    
+    this.places = ko.observableArray([]);
+
+    this.categoriesList = ko.observableArray(["Hot Drinks", "Cool Treats"]);
+    this.selectedCategory = ko.observable();
+
+    this.togglePlacesList = ko.observable(false);
+
+    this.loadError = ko.observable(false);
+    this.loadText = ko.observable(". . Loading . .");
+
+    // toggle UI
+    this.clickNav = function() {
+        return(self.togglePlacesList(!self.togglePlacesList()));
+    };
 
 	// populate places
     filteredPlaces.forEach(function(p, i){
@@ -337,24 +342,36 @@ function viewModel() {
 	
 	// shows places based on both category and name (if name exists)
     this.placesToShow = ko.computed(function() {
-		var desiredType = self.typeToShow();
-		if(iw)iw.close();
-        if (desiredType === "all") {
+        var desiredType;
+        switch(self.selectedCategory()){
+            case "Cool Treats":
+                desiredType = "icecream";
+                break;
+            case "Hot Drinks":
+                desiredType = "coffee";
+                break;
+            default:
+        };
+        
+        if(iw)iw.close();
+
+        // if no option selected
+        if (!self.selectedCategory()) {
             return(ko.utils.arrayFilter(self.places(), function(p) {
 				if(self.placesInput() !== defaultInput) {
 					if( containsMatch(p.name) || categoryMatch(p.categories) ) {
-						p.marker.setMap(map);
+						p.marker.setVisible(true);
 						return true;
 					}
 					else {
-						p.marker.setMap(null);
+						p.marker.setVisible(false);
 						return false;
 					}
 				}
-				p.marker.setMap(map);
+				p.marker.setVisible(true);
 				return true;
 			}));
-		}
+        }
         
         // if match is found, add to list of places to be shown
         return(ko.utils.arrayFilter(self.places(), function(p) {
@@ -368,19 +385,19 @@ function viewModel() {
 			if(matchCat === true) {
 				if(self.placesInput() !== defaultInput) {
 					if( containsMatch(p.name) || categoryMatch(p.categories) ) {
-						p.marker.setMap(map);
+						p.marker.setVisible(true);;
 						return true;
 					}
 					else {
-						p.marker.setMap(null);
+						p.marker.setVisible(false);;
 						return false;
 					}
 				}
-				p.marker.setMap(map);
+				p.marker.setVisible(true);;
 				return true;
 			}
 			else {
-				p.marker.setMap(null);
+				p.marker.setVisible(false);;
 				return false;
 			}
         }));
@@ -405,12 +422,4 @@ function viewModel() {
 			return true;
 		}
 	}
- 
-    // Show/hide callbacks for the places list
-    this.showPlace = function(p) {
-		$(p).show();
-	};
-    this.hidePlace = function(p) {
-		$(p).hide();
-	};
 }

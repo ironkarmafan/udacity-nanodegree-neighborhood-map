@@ -7,14 +7,14 @@ var iw = null; // info window
 function initialize() {
     $(document).ready(function(){
 
-        var cors_anywhere_url = 'https://cors-anywhere.herokuapp.com/'; // prevents CORS error
-        var yt = "far-TFsqEITUllAyGc0dEMBm3BZhwktFiUmtXCuAsSuC9hU_EkKi9dx73ixbY6U9X-DNgloo53hOYT5x2pRXbG3nIBEy51Gxyw8N2kuUTWOy5PHGtfqKioIWeFVkWXYx"; // Yelp token
-		var yelp_search_url = cors_anywhere_url + "https://api.yelp.com/v3/businesses/search";
+        var corsAnywhereURL = 'https://cors-anywhere.herokuapp.com/'; // prevents CORS error
+        var yelpToken = "far-TFsqEITUllAyGc0dEMBm3BZhwktFiUmtXCuAsSuC9hU_EkKi9dx73ixbY6U9X-DNgloo53hOYT5x2pRXbG3nIBEy51Gxyw8N2kuUTWOy5PHGtfqKioIWeFVkWXYx"; // Yelp token
+		var yelpSearchURL = corsAnywhereURL + "https://api.yelp.com/v3/businesses/search";
 
         $.ajax({
-            url: yelp_search_url,
+            url: yelpSearchURL,
             beforeSend: function(xhr){
-                xhr.setRequestHeader('Authorization', 'Bearer '+yt);
+                xhr.setRequestHeader('Authorization', 'Bearer '+yelpToken);
             },
             data: {
                 term : "ice cream, coffee", 

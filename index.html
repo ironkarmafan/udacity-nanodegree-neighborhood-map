@@ -20,11 +20,9 @@
     <button class="toggleNav"></button>
     <div id="placesNav">
         <input type="text" data-bind="textInput: placesInput">
-        <div id="filterBy">
-            <a href="#"><label><input type='radio' value='all' data-bind='checked: typeToShow' />All</label></a>
-            <a href="#"><label><input type='radio' value='coffee' data-bind='checked: typeToShow' />Hot Drinks</label></a>
-            <a href="#"><label><input type='radio' value='icecream' data-bind='checked: typeToShow' />Cool  Treats</label></a>
-        </div>
+        <select data-bind="options: categoriesList,
+                         optionsCaption: 'Hot Drinks, or Cool Treats?',
+                         value: selectedCategory"></select>
         <div id="placesList">
             <ul data-bind='template: { foreach: placesToShow,
                                         beforeRemove: hidePlace,

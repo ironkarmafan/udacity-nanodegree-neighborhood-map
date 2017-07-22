@@ -215,6 +215,17 @@ header {
     background-size: 40px;
 }
 
+#placesNav select {
+    width: 100%;
+    height: 45px;
+    margin-bottom: 5px;
+    padding: 5px;
+    color: #c1272d;
+    font-size: 16px;
+    border: 1px solid #ff80ba;
+    background-color: #ffbdd3;
+}
+
 #placesList {
     height: 100vh;
     height: calc(100vh - 180px);
@@ -236,37 +247,6 @@ header {
 #placesList li.selected {
     color: #c1272d;
     background-color: #fdf8e2;
-}
-
-#filterBy {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    border-bottom: 1px solid #fdf8e2;
-}
-
-#filterBy input[type="radio"]{
-    visibility: hidden;
-    width: 1px;
-    height: 1px;
-}
-
-#filterBy a {
-    display: block;
-    padding: 5px 10px;
-    text-decoration: none;
-    color: #fdf8e2;
-    transition: .2s all ease-out;
-    cursor: pointer;
-}
-
-#filterBy a:hover {
-    color: #c1272d;
-    background-color: #fdf8e2;
-}
-
-#filterBy label {
-    cursor: pointer;
 }
 
 .toggleNav {

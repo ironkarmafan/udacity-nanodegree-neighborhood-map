@@ -235,7 +235,8 @@ function ViewModel() {
 	var defaultInput = "";
     this.typeToShow = ko.observable("all");
     this.places = ko.observableArray([]);
-    this.categoryList = ["coffee", "icecream"];
+    this.categoriesList = ko.observableArray(["Hot Drinks", "Cool Treats"]);
+    this.selectedCategory = ko.observable();
 
 	// populate places
     filteredPlaces.forEach(function(p, i){
@@ -342,9 +343,21 @@ function ViewModel() {
 	
 	// shows places based on both category and name (if name exists)
     this.placesToShow = ko.computed(function() {
-		var desiredType = self.typeToShow();
-		if(iw)iw.close();
-        if (desiredType === "all") {
+        var desiredType;
+        switch(self.selectedCategory()){
+            case "Cool Treats":
+                desiredType = "icecream";
+                break;
+            case "Hot Drinks":
+                desiredType = "coffee";
+                break;
+            default:
+        };
+        
+        if(iw)iw.close();
+
+        // if no option selected
+        if (!self.selectedCategory()) {
             return(ko.utils.arrayFilter(self.places(), function(p) {
 				if(self.placesInput() !== defaultInput) {
 					if( containsMatch(p.name) || categoryMatch(p.categories) ) {
@@ -359,7 +372,7 @@ function ViewModel() {
 				p.marker.setVisible(true);
 				return true;
 			}));
-		}
+        }
         
         // if match is found, add to list of places to be shown
         return(ko.utils.arrayFilter(self.places(), function(p) {

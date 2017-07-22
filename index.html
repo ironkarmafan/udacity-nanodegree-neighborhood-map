@@ -14,16 +14,16 @@
     </header>
     <!-- TODO add more robust load/map error load screen, first manually add/style screens 
          then add functionality to mvvm -->
-    <div id="load" class="loadBg"><span>. . Loading . .</span></div>
+    <div id="load" class="load-bg"><span>. . Loading . .</span></div>
     <div id="map"></div>
     
-    <button class="toggleNav" data-bind="css: {shift: togglePlacesList}, click: clickNav"></button>
-    <div id="placesNav" data-bind="css: {show: togglePlacesList}">
+    <button class="toggle-nav" data-bind="css: {shift: togglePlacesList}, click: clickNav"></button>
+    <div id="places-nav" data-bind="css: {show: togglePlacesList}">
         <input type="text" data-bind="textInput: placesInput">
         <select data-bind="options: categoriesList,
                            optionsCaption: 'Hot Drinks, or Cool Treats?',
                            value: selectedCategory"></select>
-        <div id="placesList">
+        <div id="places-list">
             <ul data-bind='foreach: placesToShow'>
                 <li data-bind='attr: { "class": id }, text: name, click: $parent.markPlace'> </li>
             </ul>

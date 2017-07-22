@@ -212,8 +212,8 @@ function initMarkers() {
 }
 
 function showError() {
-    $("#load").removeClass("loadBg").addClass("errorBg");
-	$(".errorBg span").html("Could not load map or places");
+    $("#load").removeClass("load-bg").addClass("error-bg");
+	$(".error-bg span").html("Could not load map or places");
 }
 
 function ViewModel() {
@@ -252,8 +252,8 @@ function ViewModel() {
 	// animate marker and display its info window
     this.markPlace = function(p) {
 		// hightlight place in places list
-		$("#placesList li").removeClass("selected");
-		$("#placesList li." + p.id).addClass("selected");
+		$("#places-list li").removeClass("selected");
+		$("#places-list li." + p.id).addClass("selected");
 
         p.marker.setMap(map);
 
@@ -278,9 +278,9 @@ function ViewModel() {
 		var stars = displayStars(p);
 		var address = displayAddress(p);
 		
-		var s = "<div class=\"infoWindowContent\">" + 
+		var s = "<div class=\"info-window-content\">" + 
 				"<a class=\"name\" title=\"" + p.name + "\" href=\"" + p.url + "\">" + p.name + "</a>" +
-				"<p><div class=\"yelpStars " + stars + "\"></div>" +
+				"<p><div class=\"yelp-stars " + stars + "\"></div>" +
 				"<span class=\"reviewCount\"> Reviews: " + p.review_count + "</span></p>" +
 				"<p><span class=\"price\">" + p.price + "</span> · " +
 				"<span class=\"category\">" + p.categories[0].title + "</span></p>" +
@@ -295,31 +295,31 @@ function ViewModel() {
 		var c = "";
 		switch(rs) {
 			case "1":
-				c = "oneStar";
+				c = "one-star";
 				break;
 			case "1.5":
-				c = "oneHalfStar";
+				c = "one-halfstar";
 				break;
 			case "2":
-				c = "twoStars";
+				c = "two-stars";
 				break;
 			case "2.5":
-				c = "twoHalfStars";
+				c = "two-halfstars";
 				break;
 			case "3":
-				c = "threeStars";
+				c = "three-stars";
 				break;
 			case "3.5":
-				c = "threeHalfStars";
+				c = "three-halfstars";
 				break;
 			case "4":
-				c = "fourStars";
+				c = "four-stars";
 				break;
 			case "4.5":
-				c = "fourHalfStars";
+				c = "four-halfstars";
 				break;
 			case "5":
-				c = "fiveStars";
+				c = "five-stars";
 				break;
 			default:
 		}

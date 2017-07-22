@@ -7,7 +7,7 @@ body {
     height: 100vh;
     margin: 0;
     padding: 0;
-    font-family: 'Raleway', sans-serif;
+    font-family: "Raleway", sans-serif;
     font-size: 16px;
     background: #fdf8e2;
     background-size: 200px;
@@ -22,7 +22,7 @@ body {
     width: 300px;
     height: 400px;
     margin: -200px 0 0 -150px;
-    padding-top: 290px;
+    padding: 290px 0 0 0;
     background-position: bottom 120px left 70px;
     background-repeat: no-repeat;
     background-size: 200px;
@@ -40,13 +40,13 @@ body {
     }
 }
 
-.loadBg {
+.load-bg {
     background-image: url(../img/loading-bg.svg);
 }
 
-.loadBg span {
+.load-bg span {
     display: block;
-    font-family: 'Lobster', cursive;
+    font-family: "Lobster", cursive;
     color: #b55a0f;
     text-align: center;
     font-size: 3.5rem;
@@ -55,16 +55,16 @@ body {
 
 @keyframes fade {
     0%, 50%, 100% {opacity: 1;}
-    25%, 75% {opacity: .5;}
+    25%, 75% {opacity: 0.5;}
 }
 
-.errorBg {
+.error-bg {
     background-image: url(../img/error-bg.svg);
 }
 
-.errorBg span {
+.error-bg span {
     display: block;
-    font-family: 'Lobster', cursive;
+    font-family: "Lobster", cursive;
     color: #c1272d;
     text-align: center;
     font-size: 2.5rem;
@@ -73,14 +73,14 @@ body {
 
 header {
     display: block;
-    font-family: 'Lobster', cursive;
+    font-family: "Lobster", cursive;
     position: fixed;
     box-sizing: border-box;
     width: calc(100% - 45px);
     height: 45px;
     top: calc(100% - 45px);
     left: 45px;
-    font-family: 'Lobster', cursive;
+    font-family: "Lobster", cursive;
     text-align: center;
     font-size: 7vw;
     line-height: 45px;
@@ -90,7 +90,6 @@ header {
     color: white;
     transition: .4s all ease-out;
     cursor: pointer;
-    
 }
 
     header.shift {
@@ -160,7 +159,7 @@ header {
     left: 0;
 }
 
-#placesNav {
+#places-nav {
     box-sizing: border-box;
     position: fixed;
     top: 100%;
@@ -171,42 +170,42 @@ header {
     color: #fdf8e2;
     background-color: #a61726;
     z-index: 4;
-    transition: .4s all ease-out;
+    transition: 0.4s all ease-out;
     overflow: scroll;
 }
 
-    #placesNav.show {
+    #places-nav.show {
         top: 0;
     }
 
 @media screen and (min-width: 371px) {
-    #placesNav {
+    #places-nav {
         width: 300px;
         padding: 15px;
         top: 0;
         left: -300px;
     }
 
-    #placesNav.show {
+    #places-nav.show {
         left: 0;
     }
 }
 
 @media screen and (min-width: 769px) {
-    #placesNav,
-    #placesNav.show {
+    #places-nav,
+    #places-nav.show {
         left: 0;
         transition: unset;
     }
 }
 
-#placesNav input[type="text"] {
+#places-nav input[type="text"] {
     box-sizing: border-box;
     width: 100%;
     height: 45px;
-    margin-bottom: 5px;
+    margin: 0 0 5px 0;
     padding: 0 50px 0 5px;
-    font-family: 'Raleway', sans-serif;
+    font-family: "Raleway", sans-serif;
     font-size: 16px;
     color: #c1272d;
     border: 1px solid #ff80ba;
@@ -215,10 +214,10 @@ header {
     background-size: 40px;
 }
 
-#placesNav select {
+#places-nav select {
     width: 100%;
     height: 45px;
-    margin-bottom: 5px;
+    margin: 0 0 5px 0;
     padding: 5px;
     color: #c1272d;
     font-size: 16px;
@@ -226,30 +225,30 @@ header {
     background-color: #ffbdd3;
 }
 
-#placesList {
+#places-list {
     height: 100vh;
     height: calc(100vh - 180px);
     overflow: scroll;
 }
 
-#placesList li {
+#places-list li {
     padding: 5px;
     list-style: none;
     border-top: 1px dotted #ffbdd3;
     cursor: pointer;
-    transition: .2s all ease-out;
+    transition: 0.2s all ease-out;
 }
 
-#placesList li:first-child {
+#places-list li:first-child {
     border-top: 0 none;
 }
 
-#placesList li.selected {
+#places-list li.selected {
     color: #c1272d;
     background-color: #fdf8e2;
 }
 
-.toggleNav {
+.toggle-nav {
     position: fixed;
     width: 45px;
     height: 45px;
@@ -260,113 +259,113 @@ header {
     background: #c1272d url(../img/nav-hamburger.svg) no-repeat 50% 50%;
     background-size: 30px;
     z-index: 5;
-    transition: .4s all ease-out;
+    transition: 0.4s all ease-out;
 }
 
-    .toggleNav.shift {
+    .toggle-nav.shift {
         top: 0;
     }
 
 @media screen and (min-width: 371px) {
-    .toggleNav {
+    .toggle-nav {
         top: 0;
         left: 0;
     }
 
-        .toggleNav.shift {
+        .toggle-nav.shift {
             top: 0;
             left: 300px;
         }
 }
 
 @media screen and (min-width: 769px) {
-    .toggleNav {
+    .toggle-nav {
         display: none;
         transition: unset;
     }
 }
 
-.infoWindowContent {
+.info-window-content {
     width: 200px;
-    font-family: 'Raleway', sans-serif;
+    font-family: "Raleway", sans-serif;
     font-size: 12px;
     line-height: 1.25em;
     box-sizing: border-box;
     background-color: white;
 }
 
-.infoWindowContent a:link,
-.infoWindowContent a:visited,
-.infoWindowContent a:active {
+.info-window-content a:link,
+.info-window-content a:visited,
+.info-window-content a:active {
     color: #b55a0f;
-    transition: .2s color ease-out;
+    transition: 0.2s color ease-out;
 }
 
-.infoWindowContent a:hover,
-.infoWindowContent a:focus {
+.info-window-content a:hover,
+.info-window-content a:focus {
     color: #dd8c4e;
 }
 
-.infoWindowContent .name {
+.info-window-content .name {
     display: block;
-    margin-bottom: 5px;
+    margin: 0 0 5px 0;
     font-size: 1.33em;
     text-decoration: none;
     font-weight: bold;
 }
 
-.infoWindowContent p {
-    margin-bottom: 5px;
+.info-window-content p {
+    margin: 0 0 5px 0;
 }
 
-.infoWindowContent .address {
+.info-window-content .address {
     display: block;
 }
 
-.infoWindowContent .phone {
+.info-window-content .phone {
     text-decoration: none;
 }
 
-.infoWindowContent .yelpStars {
+.info-window-content .yelp-stars {
     display: inline-block;
     width: 102px;
     height: 18px;
     background-image: url(../img/yelp-stars.png);
 }
 
-.yelpStars.oneStar {
+.yelp-stars.one-star {
     background-position-y: 162px;
 }
 
-.yelpStars.oneHalfStar {
+.yelp-stars.one-halfstar {
     background-position-y: 144px;
 }
 
-.yelpStars.twoStars {
+.yelp-stars.two-stars {
     background-position-y: 126px;
 }
 
-.yelpStars.twoHalfStars {
+.yelp-stars.two-halfstars {
     background-position-y: 108px;
 }
 
-.yelpStars.threeStars {
+.yelp-stars.three-stars {
     background-position-y: 90px;
 }
 
-.yelpStars.threeHalfStars {
+.yelp-stars.three-halfstars {
     background-position-y: 72px;
 }
 
-.yelpStars.fourStars {
+.yelp-stars.four-stars {
     background-position-y: 54px;
 }
 
-.yelpStars.fourHalfStars {
+.yelp-stars.four-halfstars {
     background-position-y: 36px;
 }
 
-.yelpStars.fiveStars {
+.yelp-stars.five-stars {
     background-position-y: 18px;
 }
 

@@ -21,12 +21,10 @@
     <div id="placesNav">
         <input type="text" data-bind="textInput: placesInput">
         <select data-bind="options: categoriesList,
-                         optionsCaption: 'Hot Drinks, or Cool Treats?',
-                         value: selectedCategory"></select>
+                           optionsCaption: 'Hot Drinks, or Cool Treats?',
+                           value: selectedCategory"></select>
         <div id="placesList">
-            <ul data-bind='template: { foreach: placesToShow,
-                                        beforeRemove: hidePlace,
-                                        afterAdd: showPlace }'>
+            <ul data-bind='foreach: placesToShow'>
                 <li data-bind='attr: { "class": id }, text: name, click: $parent.markPlace'> </li>
             </ul>
         </div>

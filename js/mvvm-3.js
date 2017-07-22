@@ -423,12 +423,4 @@ function ViewModel() {
 			return true;
 		}
 	}
- 
-    // Show/hide callbacks for the places list
-    this.showPlace = function(p) {
-		$(p).show();
-	};
-    this.hidePlace = function(p) {
-		$(p).hide();
-	};
 }

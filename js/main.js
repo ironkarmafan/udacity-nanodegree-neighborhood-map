@@ -351,7 +351,7 @@ function ViewModel() {
                 desiredType = "coffee";
                 break;
             default:
-        };
+        }
         
         if(iw)iw.close();
 
@@ -385,19 +385,19 @@ function ViewModel() {
 			if(matchCat === true) {
 				if(self.placesInput() !== defaultInput) {
 					if( containsMatch(p.name) || categoryMatch(p.categories) ) {
-						p.marker.setVisible(true);;
+						p.marker.setVisible(true);
 						return true;
 					}
 					else {
-						p.marker.setVisible(false);;
+						p.marker.setVisible(false);
 						return false;
 					}
 				}
-				p.marker.setVisible(true);;
+				p.marker.setVisible(true);
 				return true;
 			}
 			else {
-				p.marker.setVisible(false);;
+				p.marker.setVisible(false);
 				return false;
 			}
         }));
